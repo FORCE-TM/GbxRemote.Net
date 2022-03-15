@@ -1,5 +1,4 @@
 ﻿using GbxRemoteNet;
-using GbxRemoteNet.Enums;
 using GbxRemoteNet.XmlRpc.Packets;
 using GbxRemoteNet.XmlRpc.Types;
 using System;
@@ -39,7 +38,7 @@ namespace CallbackExample {
             client.OnDisconnected += Client_OnDisconnected;
 
             // enable callbacks
-            await client.EnableCallbackTypeAsync();
+            await client.EnableCallbacksAsync();
 
             // wait indefinitely or until disconnect
             WaitHandle.WaitAny(new[] { cancelToken.Token.WaitHandle });

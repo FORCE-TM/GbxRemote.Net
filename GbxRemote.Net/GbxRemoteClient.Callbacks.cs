@@ -1,5 +1,4 @@
-﻿using GbxRemoteNet.Enums;
-using GbxRemoteNet.Structs;
+﻿using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Packets;
@@ -120,21 +119,6 @@ namespace GbxRemoteNet {
         public event PlayerInfoChangedAction OnPlayerInfoChanged;
 
         /// <summary>
-        /// Enable callbacks. If no parameter is provided,
-        /// all callbacks are enabled by default.
-        /// </summary>
-        /// <param name="callbackType"></param>
-        /// <returns></returns>
-        public async Task EnableCallbackTypeAsync(CallbackType callbackType=CallbackType.Internal | CallbackType.ModeScript | CallbackType.Checkpoints) {
-            if (callbackType.HasFlag(CallbackType.Internal))
-                await EnableCallbacksAsync(true);
-            if (callbackType.HasFlag(CallbackType.ModeScript))
-                await TriggerModeScriptEventArrayAsync("XmlRpc.EnableCallbacks", "true");
-            if (callbackType.HasFlag(CallbackType.Checkpoints))
-                await TriggerModeScriptEventArrayAsync("Trackmania.Event.SetCurLapCheckpointsMode", "always");
-        }
-
-        /// <summary>
         /// Main callback handler.
         /// </summary>
         /// <param name="call"></param>
@@ -206,14 +190,6 @@ namespace GbxRemoteNet {
                     OnPlayerInfoChanged?.Invoke(
                         (SPlayerInfo)XmlRpcTypes.ToNativeValue<SPlayerInfo>(call.Arguments[0])
                     );
-                    break;
-                case "ManiaPlanet.ModeScriptCallback":
-                case "TrackMania.ModeScriptCallback":
-                    await HandleModeScriptCallback(call);
-                    break;
-                case "ManiaPlanet.ModeScriptCallbackArray":
-                case "TrackMania.ModeScriptCallbackArray":
-                    await HandleModeScriptCallback(call);
                     break;
             }
 

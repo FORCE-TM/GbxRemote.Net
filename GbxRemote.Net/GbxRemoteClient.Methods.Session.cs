@@ -36,7 +36,7 @@ namespace GbxRemoteNet {
         /// Allow the GameServer to call you back.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> EnableCallbacksAsync(bool enable) =>
+        public async Task<bool> EnableCallbacksAsync(bool enable = true) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("EnableCallbacks", enable)
             );
