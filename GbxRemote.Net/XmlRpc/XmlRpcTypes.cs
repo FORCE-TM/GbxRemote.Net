@@ -122,19 +122,19 @@ namespace GbxRemoteNet.XmlRpc {
 
             object nativeStruct = Activator.CreateInstance(t);
 
-            var fields = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var fields = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             // copy all the available fields to the instance
             foreach (var field in fields) {
                 if (xmlStruct.Fields.ContainsKey(field.Name)) {
-                    var fieldType = field.FieldType.GetElementType() ?? field.FieldType;
+                    var fieldType = field.PropertyType.GetElementType() ?? field.PropertyType;
                     object objValue = ToNativeValue<object>(xmlStruct.Fields[field.Name], fieldType);
                     Type objType = objValue.GetType();
 
                     if (objType.IsArray) {
                         // array requires special conversion to work
                         int length = (int)objType.GetProperty("Length").GetValue(objValue);
-                        Array fieldInstance = Array.CreateInstance(field.FieldType.GetElementType(), length);
+                        Array fieldInstance = Array.CreateInstance(field.PropertyType.GetElementType(), length);
                         Array.Copy((Array)objValue, fieldInstance, length);
                         field.SetValue(nativeStruct, fieldInstance);
                     } else {
