@@ -18,11 +18,6 @@ namespace GbxRemoteNet {
         private readonly GbxRemoteClientOptions Options;
 
         /// <summary>
-        /// This is the API version the client will be using.
-        /// </summary>
-        public const string ApiVersion = "2013-04-16";
-
-        /// <summary>
         /// Create a new instance of the GBXRemote client.
         /// </summary>
         /// <param name="host">The address to the TrackMania server. Default: 127.0.0.1</param>
@@ -95,8 +90,6 @@ namespace GbxRemoteNet {
 
             if (!await ConnectAsync(Options.ConnectionRetries, Options.ConnectionRetryTimeout))
                 return false;
-
-            await SetApiVersionAsync(ApiVersion);
 
             if (await AuthenticateAsync(login, password)) {
                 logger.Debug("Client connected to GbxRemote");

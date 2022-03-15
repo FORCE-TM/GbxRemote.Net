@@ -24,7 +24,7 @@ namespace MulticallExample {
             // build the multicall
             MultiCall multicall = new();
             multicall.Add(client.GetChatLinesAsync)
-                     .Add("system.methodHelp", "SetApiVersion")
+                     .Add("system.methodHelp", "Authenticate")
                      .Add(nameof(client.GetVersionAsync))
                      .Add("NonExistentMethod");
 

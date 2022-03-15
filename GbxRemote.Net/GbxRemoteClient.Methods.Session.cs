@@ -40,15 +40,5 @@ namespace GbxRemoteNet {
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("EnableCallbacks", enable)
             );
-
-        /// <summary>
-        /// Define the wanted api.
-        /// </summary>
-        /// <param name="version"></param>
-        /// <returns></returns>
-        public async Task<bool> SetApiVersionAsync(string version) =>
-            (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("SetApiVersion", version)
-            );
     }
 }
