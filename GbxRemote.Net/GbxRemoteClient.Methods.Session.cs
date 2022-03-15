@@ -1,8 +1,4 @@
 ﻿using GbxRemoteNet.XmlRpc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GbxRemoteNet {
@@ -13,9 +9,6 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Allow user authentication by specifying a login and a password, to gain access to the set of functionalities corresponding to this authorization level.
         /// </summary>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public async Task<bool> AuthenticateAsync(string login, string password) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("Authenticate", login, password)
@@ -24,9 +17,6 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Change the password for the specified login/user. Only available to SuperAdmin.
         /// </summary>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public async Task<bool> ChangeAuthPasswordAsync(string login, string password) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ChangeAuthPassword", login, password)
@@ -35,7 +25,6 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Allow the GameServer to call you back.
         /// </summary>
-        /// <returns></returns>
         public async Task<bool> EnableCallbacksAsync(bool enable = true) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("EnableCallbacks", enable)
