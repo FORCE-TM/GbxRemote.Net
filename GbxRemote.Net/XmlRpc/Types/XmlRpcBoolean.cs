@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace GbxRemoteNet.XmlRpc.Types {
             string value = element.Value.Trim();
 
             if (value == "0" || value == "1")
-                Value = Convert.ToBoolean(Convert.ToInt32(value));
+                Value = Convert.ToBoolean(Convert.ToInt32(value, CultureInfo.InvariantCulture));
             else
                 Value = Convert.ToBoolean(value);
         }

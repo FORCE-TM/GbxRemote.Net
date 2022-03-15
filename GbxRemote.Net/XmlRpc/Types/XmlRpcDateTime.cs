@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace GbxRemoteNet.XmlRpc.Types {
         }
 
         public XmlRpcDateTime(XElement element) : base(element) {
-            Value = DateTime.Parse(element.Value);
+            Value = DateTime.Parse(element.Value, CultureInfo.InvariantCulture);
         }
 
         public bool Equals(XmlRpcDateTime other) {
