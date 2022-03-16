@@ -1,5 +1,5 @@
 ﻿namespace GbxRemoteNet.Structs {
-    public class Mods {
+    public class Mod {
         public string EnvName { get; set; }
         public string Url { get; set; }
     }

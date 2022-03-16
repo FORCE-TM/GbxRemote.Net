@@ -1,4 +1,5 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Collections.Generic;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using System.Threading.Tasks;
 
@@ -336,7 +337,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Force the scores of the current game. Only available in rounds and team mode. You have to pass an array of structs {int PlayerId, int Score}. And a boolean SilentMode - if true, the scores are silently updated (only available for SuperAdmin), allowing an external controller to do its custom counting... Only available to Admin/SuperAdmin.
         /// </summary>
-        public async Task<bool> ForceScoresAsync(PlayerScore[] playerScores, bool silentMode) =>
+        public async Task<bool> ForceScoresAsync(IEnumerable<PlayerScore> playerScores, bool silentMode) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ForceScores", playerScores, silentMode)
             );

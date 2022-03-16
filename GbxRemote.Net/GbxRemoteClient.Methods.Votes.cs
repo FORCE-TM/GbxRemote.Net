@@ -1,4 +1,5 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Collections.Generic;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using System.Threading.Tasks;
 
@@ -82,7 +83,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Set new ratios for passing specific votes. The parameter is an array of structs {string Command, double Ratio}, ratio is in [0,1] or -1 for vote disabled. Only available to Admin.
         /// </summary>
-        public async Task<bool> SetCallVoteRatiosAsync(CallVoteRatio[] ratios) =>
+        public async Task<bool> SetCallVoteRatiosAsync(IEnumerable<CallVoteRatio> ratios) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetCallVoteRatios", ratios)
             );

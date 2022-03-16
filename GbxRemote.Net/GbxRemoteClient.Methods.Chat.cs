@@ -1,4 +1,6 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Collections;
+using System.Collections.Generic;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using System.Threading.Tasks;
 
@@ -18,7 +20,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Send a localised text message to all clients without the server login, or optionally to a Login (which can be a single login or a list of comma-separated logins). The parameter is an array of structures {Lang='??', Text='...'}. If no matching language is found, the last text in the array is used. Only available to Admin.
         /// </summary>
-        public async Task<bool> ChatSendServerMessageToLanguageAsync(Language[] lang, string message) =>
+        public async Task<bool> ChatSendServerMessageToLanguageAsync(IEnumerable<Language> lang, string message) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ChatSendServerMessageToLanguage", lang, message)
             );
@@ -50,7 +52,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Send a localised text message to all clients, or optionally to a Login (which can be a single login or a list of comma-separated logins). The parameter is an array of structures {Lang='??', Text='...'}. If no matching language is found, the last text in the array is used. Only available to Admin.
         /// </summary>
-        public async Task<bool> ChatSendToLanguageAsync(Language[] lang, string message) =>
+        public async Task<bool> ChatSendToLanguageAsync(IEnumerable<Language> lang, string message) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ChatSendToLanguage", lang, message)
             );

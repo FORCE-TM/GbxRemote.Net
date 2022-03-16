@@ -1,6 +1,8 @@
 ﻿using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GbxRemoteNet {
@@ -83,7 +85,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Add the list of challenges with the specified filenames at the end of the current selection. The list of challenges to add is an array of strings. Only available to Admin.
         /// </summary>
-        public async Task<int> AddChallengeListAsync(Array filenames) =>
+        public async Task<int> AddChallengeListAsync(IEnumerable<string> filenames) =>
             (int)XmlRpcTypes.ToNativeValue<int>(
                 await CallOrFaultAsync("AddChallengeList", filenames)
             );
@@ -99,7 +101,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Remove the list of challenges with the specified filenames from the current selection. The list of challenges to remove is an array of strings. Only available to Admin.
         /// </summary>
-        public async Task<int> RemoveChallengeListAsync(Array filenames) =>
+        public async Task<int> RemoveChallengeListAsync(IEnumerable<string> filenames) =>
             (int)XmlRpcTypes.ToNativeValue<int>(
                 await CallOrFaultAsync("RemoveChallengeList", filenames)
             );
@@ -115,7 +117,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Insert the list of challenges with the specified filenames after the current challenge. The list of challenges to insert is an array of strings. Only available to Admin.
         /// </summary>
-        public async Task<int> InsertChallengeListAsync(Array filenames) =>
+        public async Task<int> InsertChallengeListAsync(IEnumerable<string> filenames) =>
             (int)XmlRpcTypes.ToNativeValue<int>(
                 await CallOrFaultAsync("InsertChallengeList", filenames)
             );
@@ -131,7 +133,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Set as next challenges the list of challenges with the specified filenames, if they are present in the selection. The list of challenges to choose is an array of strings. Only available to Admin.
         /// </summary>
-        public async Task<int> ChooseNextChallengeListAsync(Array filenames) =>
+        public async Task<int> ChooseNextChallengeListAsync(IEnumerable<string> filenames) =>
             (int)XmlRpcTypes.ToNativeValue<int>(
                 await CallOrFaultAsync("ChooseNextChallengeList", filenames)
             );

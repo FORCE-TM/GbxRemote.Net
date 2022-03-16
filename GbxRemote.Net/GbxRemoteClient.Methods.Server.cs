@@ -1,4 +1,5 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Collections.Generic;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using System.Threading.Tasks;
@@ -355,7 +356,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Set the mods to apply on the clients. Parameters: Override, if true even the challenges with a mod will be overridden by the server setting; and Mods, an array of structures [{EnvName, Url}, ...]. Requires a challenge restart to be taken into account. Only available to Admin.
         /// </summary>
-        public async Task<bool> SetForcedModsAsync(bool forced, Mods mods) =>
+        public async Task<bool> SetForcedModsAsync(bool forced, IEnumerable<Mod> mods) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetForcedMods", forced, mods)
             );
@@ -387,7 +388,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Defines a list of remappings for player skins. It expects a list of structs Orig, Name, Checksum, Url. Orig is the name of the skin to remap, or '*' for any other. Name, Checksum, Url define the skin to use. (They are optional, you may set value '' for any of those. All 3 null means same as Orig). Will only affect players connecting after the value is set. Only available to Admin.
         /// </summary>
-        public async Task<bool> SetForcedSkinsAsync(ForcedSkin[] skins) =>
+        public async Task<bool> SetForcedSkinsAsync(IEnumerable<ForcedSkin> skins) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetForcedSkins", skins)
             );

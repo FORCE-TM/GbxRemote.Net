@@ -1,4 +1,5 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Collections.Generic;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using System.Threading.Tasks;
 
@@ -258,7 +259,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Set the points used for the scores in rounds mode. Points is an array of decreasing integers for the players from the first to last. And you can add an optional boolean to relax the constraint checking on the scores. Only available to Admin.
         /// </summary>
-        public async Task<bool> SetRoundCustomPointsAsync(int[] points, bool scoreConstraintCheck = false) =>
+        public async Task<bool> SetRoundCustomPointsAsync(IEnumerable<int> points, bool scoreConstraintCheck = false) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetRoundCustomPoints", points, scoreConstraintCheck)
             );
