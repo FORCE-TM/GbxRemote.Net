@@ -1,34 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace GbxRemoteNet.XmlRpc.Types {
+namespace GbxRemoteNet.XmlRpc.Types
+{
     /// <summary>
     /// Represents an XML-RPC string.
     /// </summary>
-    public class XmlRpcString : XmlRpcBaseType, IEquatable<XmlRpcString> {
+    public class XmlRpcString : XmlRpcBaseType, IEquatable<XmlRpcString>
+    {
         public string Value;
 
-        public XmlRpcString(string value) : base(null) {
+        public XmlRpcString(string value) : base(null)
+        {
             Value = value;
         }
 
-        public XmlRpcString(XElement element) : base(element) {
+        public XmlRpcString(XElement element) : base(element)
+        {
             Value = element.Value;
         }
 
-        public bool Equals(XmlRpcString other) {
+        public bool Equals(XmlRpcString other)
+        {
             return Value.Equals(other.Value);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return Equals((XmlRpcString)obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return GetHashCode();
         }
 
@@ -36,7 +39,8 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Generate the XML element for this value.
         /// </summary>
         /// <returns>Generated element</returns>
-        public override XElement GetXml() {
+        public override XElement GetXml()
+        {
             return new XElement(XmlRpcElementNames.String, Value);
         }
     }

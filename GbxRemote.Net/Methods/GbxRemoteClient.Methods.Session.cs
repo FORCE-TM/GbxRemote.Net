@@ -1,11 +1,13 @@
-﻿using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet.XmlRpc;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Session
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Allow user authentication by specifying a login and a password, to gain access to the set of functionalities corresponding to this authorization level.
         /// </summary>

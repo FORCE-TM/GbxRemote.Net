@@ -1,14 +1,16 @@
-﻿using GbxRemoteNet.XmlRpc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Types;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: System
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Return an array of all available XML-RPC methods on this server.
         /// </summary>
@@ -36,17 +38,20 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Call multiple methods without multiple round-trip times.
         /// </summary>
-        public async Task<object[]> MultiCallAsync(MultiCall multicall) {
+        public async Task<object[]> MultiCallAsync(MultiCall multicall)
+        {
             List<XmlRpcBaseType> calls = new();
 
             // build the call
-            foreach (var call in multicall.MethodCalls) {
+            foreach (var call in multicall.MethodCalls)
+            {
                 string methodName = call.MethodName;
                 if (methodName.EndsWith("Async"))
                     methodName = methodName.Substring(0, methodName.Length - 5);
 
                 XmlRpcBaseType[] args = MethodArgs(call.Arguments);
-                XmlRpcStruct callStruct = new(new Struct() {
+                XmlRpcStruct callStruct = new(new Struct()
+                {
                     { "methodName", new XmlRpcString(methodName) },
                     { "params", new XmlRpcArray(args) }
                 });
@@ -58,8 +63,8 @@ namespace GbxRemoteNet {
             XmlRpcArray multicallArgs = new(calls.ToArray());
             var msg = await CallAsync("system.multicall", multicallArgs);
 
-            if (msg.IsFault) {
-                logger.Error("Multicall failed with reason: {message}", (XmlRpcFault)msg.ResponseData);
+            if (msg.IsFault)
+            {
                 throw new XmlRpcFaultException((XmlRpcFault)msg.ResponseData);
             }
 
@@ -67,8 +72,10 @@ namespace GbxRemoteNet {
             XmlRpcArray results = (XmlRpcArray)msg.ResponseData;
             object[] converted = new object[results.Values.Length];
 
-            for (int i = 0; i < converted.Length; i++) {
-                if (results.Values[i] is XmlRpcStruct) {
+            for (int i = 0; i < converted.Length; i++)
+            {
+                if (results.Values[i] is XmlRpcStruct)
+                {
                     // if struct we have a fault instead
                     XmlRpcStruct faultStruct = (XmlRpcStruct)results.Values[i];
 
@@ -76,7 +83,9 @@ namespace GbxRemoteNet {
                         ((XmlRpcInteger)faultStruct.Fields["faultCode"]).Value,
                         ((XmlRpcString)faultStruct.Fields["faultString"]).Value
                     );
-                } else {
+                }
+                else
+                {
                     // else normal resutl
                     XmlRpcArray resultArr = (XmlRpcArray)results.Values[i];
 

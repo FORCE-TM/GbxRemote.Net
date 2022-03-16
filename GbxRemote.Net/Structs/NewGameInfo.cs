@@ -1,5 +1,7 @@
-namespace GbxRemoteNet.Structs {
-    public class NewGameInfo {
+namespace GbxRemoteNet.Structs
+{
+    public class NewGameInfo
+    {
         // Duplicate in GameInfo
         public const int GAMEMODE_ROUNDS = 0;
         public const int GAMEMODE_TIMEATTACK = 1;

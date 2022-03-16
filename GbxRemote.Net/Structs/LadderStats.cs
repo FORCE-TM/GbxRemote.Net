@@ -1,5 +1,7 @@
-namespace GbxRemoteNet.Structs {
-    public class LadderStats {
+namespace GbxRemoteNet.Structs
+{
+    public class LadderStats
+    {
         public double LastMatchScore { get; set; }
         public int NbrMatchWins { get; set; }
         public int NbrMatchDraws { get; set; }

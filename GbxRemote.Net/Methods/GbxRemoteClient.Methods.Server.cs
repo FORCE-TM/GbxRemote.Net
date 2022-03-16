@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Server
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Returns a struct with the Name, Version and Build of the application remotely controled.
         /// </summary>
@@ -332,7 +334,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Optional parameter for compatibility: struct version (0 = united, 1 = forever). Returns a struct containing the server options: Name, Comment, Password, PasswordForSpectator, CurrentMaxPlayers, NextMaxPlayers, CurrentMaxSpectators, NextMaxSpectators, IsP2PUpload, IsP2PDownload, CurrentLadderMode, NextLadderMode, CurrentVehicleNetQuality, NextVehicleNetQuality, CurrentCallVoteTimeOut, NextCallVoteTimeOut, CallVoteRatio, AllowChallengeDownload and AutoSaveReplays, and additionally for forever: RefereePassword, RefereeMode, AutoSaveValidationReplays, HideServer, CurrentUseChangingValidationSeed, NextUseChangingValidationSeed.
         /// </summary>
-        public async Task<ServerOptions> GetServerOptionsAsync(int serverType=1) =>
+        public async Task<ServerOptions> GetServerOptionsAsync(int serverType = 1) =>
             (ServerOptions)XmlRpcTypes.ToNativeValue<ServerOptions>(
                 await CallOrFaultAsync("GetServerOptions", serverType)
             );
@@ -484,9 +486,9 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Start a server on internet using the 'Login' and 'Password' specified in the struct passed as parameters. Only available to SuperAdmin.
         /// </summary>
-        public async Task<bool> StartServerInternetAsync(ServerCredential credential) =>
+        public async Task<bool> StartServerInternetAsync(ServerCredential credentials) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("StartServerInternet", credential)
+                await CallOrFaultAsync("StartServerInternet", credentials)
             );
     }
 }

@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Votes
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Call a vote for a cmd. The command is a XML string corresponding to an XmlRpc request. Only available to Admin.
         /// </summary>

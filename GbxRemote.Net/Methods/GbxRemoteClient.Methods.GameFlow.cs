@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Game Flow
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Restarts the challenge, with an optional boolean parameter DontClearCupScores (only available in cup mode). Only available to Admin.
         /// </summary>
@@ -43,7 +45,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Optional parameter for compatibility: struct version (0 = united, 1 = forever). Returns a struct containing the current game settings, ie: GameMode, ChatTime, NbChallenge, RoundsPointsLimit, RoundsUseNewRules, RoundsForcedLaps, TimeAttackLimit, TimeAttackSynchStartPeriod, TeamPointsLimit, TeamMaxPoints, TeamUseNewRules, LapsNbLaps, LapsTimeLimit, FinishTimeout, and additionally for version 1: AllWarmUpDuration, DisableRespawn, ForceShowAllOpponents, RoundsPointsLimitNewRules, TeamPointsLimitNewRules, CupPointsLimit, CupRoundsPerChallenge, CupNbWinners, CupWarmUpDuration.
         /// </summary>
-        public async Task<GameInfo> GetCurrentGameInfoAsync(int serverType=1) =>
+        public async Task<GameInfo> GetCurrentGameInfoAsync(int serverType = 1) =>
             (GameInfo)XmlRpcTypes.ToNativeValue<GameInfo>(
                 await CallOrFaultAsync("GetCurrentGameInfo", serverType)
             );
@@ -51,7 +53,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Optional parameter for compatibility: struct version (0 = united, 1 = forever). Returns a struct containing the game settings for the next challenge, ie: GameMode, ChatTime, NbChallenge, RoundsPointsLimit, RoundsUseNewRules, RoundsForcedLaps, TimeAttackLimit, TimeAttackSynchStartPeriod, TeamPointsLimit, TeamMaxPoints, TeamUseNewRules, LapsNbLaps, LapsTimeLimit, FinishTimeout, and additionally for version 1: AllWarmUpDuration, DisableRespawn, ForceShowAllOpponents, RoundsPointsLimitNewRules, TeamPointsLimitNewRules, CupPointsLimit, CupRoundsPerChallenge, CupNbWinners, CupWarmUpDuration.
         /// </summary>
-        public async Task<GameInfo> GetNextGameInfoAsync(int serverType=1) =>
+        public async Task<GameInfo> GetNextGameInfoAsync(int serverType = 1) =>
             (GameInfo)XmlRpcTypes.ToNativeValue<GameInfo>(
                 await CallOrFaultAsync("GetNextGameInfo", serverType)
             );
@@ -59,7 +61,7 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Optional parameter for compatibility: struct version (0 = united, 1 = forever). Returns a struct containing two other structures, the first containing the current game settings and the second the game settings for next challenge. The first structure is named CurrentGameInfos and the second NextGameInfos.
         /// </summary>
-        public async Task<CurrentNextValue<GameInfo>> GetGameInfosAsync(int serverType=1) =>
+        public async Task<CurrentNextValue<GameInfo>> GetGameInfosAsync(int serverType = 1) =>
             (CurrentNextValue<GameInfo>)XmlRpcTypes.ToNativeValue<CurrentNextValue<GameInfo>>(
                 await CallOrFaultAsync("GetGameInfos", serverType)
             );

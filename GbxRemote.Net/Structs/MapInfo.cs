@@ -1,5 +1,7 @@
-namespace GbxRemoteNet.Structs {
-    public class MapInfo {
+namespace GbxRemoteNet.Structs
+{
+    public class MapInfo
+    {
         public string UId { get; set; }
         public string Name { get; set; }
         public string FileName { get; set; }

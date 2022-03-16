@@ -1,35 +1,58 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
+using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Packets;
 using GbxRemoteNet.XmlRpc.Types;
-using System.Threading.Tasks;
-using GbxRemoteNet.XmlRpc.ExtraTypes;
 
-namespace GbxRemoteNet {
-    public partial class GbxRemoteClient {
+namespace GbxRemoteNet
+{
+    public partial class GbxRemoteClient
+    {
         public delegate Task CallbackAction<in T>(MethodCall call, T[] parameters);
+
         //public delegate Task ServerStartAction();
         //public delegate Task ServerStopAction();
         public delegate Task StatusChangedAction(int statusCode, string statusName);
+
         public delegate Task EchoAction(string internalParam, string publicParam);
+
         public delegate Task PlayerConnectAction(string login, bool isSpectator);
+
         public delegate Task PlayerDisconnectAction(string login);
+
         public delegate Task PlayerInfoChangedAction(SPlayerInfo playerInfo);
+
         public delegate Task PlayerChatAction(int playerUid, string login, string text, bool isRegisteredCmd);
+
         public delegate Task PlayerCheckpointAction(int playerUid, string login, int timeOrScore, int curLap, int checkpointIndex);
+
         public delegate Task PlayerFinishAction(int playerUid, string login, int timeOrScore);
+
         public delegate Task PlayerIncoherenceAction(int playerUid, string login);
+
         public delegate Task PlayerManialinkPageAnswerAction(int playerUid, string login, int answer);
+
         public delegate Task BeginRaceAction(SChallengeInfo challenge);
+
         public delegate Task EndRaceAction(SPlayerRanking[] rankings, SChallengeInfo challenge);
+
         public delegate Task BeginChallengeAction(SChallengeInfo challenge, bool warmUp, bool matchContinuation);
+
         public delegate Task EndChallengeAction(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge);
+
         public delegate Task BeginRoundAction();
+
         public delegate Task EndRoundAction();
+
         public delegate Task ChallengeListModifiedAction(int curChallengeIndex, int nextChallengeIndex, bool isListModified);
+
         public delegate Task VoteUpdatedAction(string stateName, string login, string cmdName, string cmdParam);
+
         public delegate Task BillUpdatedAction(int billId, int state, string stateName, int transactionId);
+
         public delegate Task TunnelDataReceivedAction(int playerUid, string login, Base64 data);
+
         public delegate Task ManualFlowControlTransitionAction(string transition);
 
         /// <summary>
@@ -148,8 +171,10 @@ namespace GbxRemoteNet {
         /// <summary>
         /// Main callback handler.
         /// </summary>
-        private async Task GbxRemoteClient_OnCallback(MethodCall call) {
-            switch (call.Method) {
+        private async Task GbxRemoteClient_OnCallback(MethodCall call)
+        {
+            switch (call.Method)
+            {
                 //case "TrackMania.ServerStart":
                 //    OnServerStart?.Invoke();
                 //    break;

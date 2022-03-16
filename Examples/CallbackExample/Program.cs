@@ -1,22 +1,23 @@
-﻿using GbxRemoteNet;
-using GbxRemoteNet.XmlRpc.Packets;
-using GbxRemoteNet.XmlRpc.Types;
-using System;
-using System.Dynamic;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GbxRemoteNet;
 using GbxRemoteNet.Structs;
 
-namespace CallbackExample {
-    class Program {
-        static CancellationTokenSource cancelToken = new CancellationTokenSource();
+namespace CallbackExample
+{
+    internal class Program
+    {
+        private static readonly CancellationTokenSource cancelToken = new();
 
-        static async Task Main(string[] args) {
+        private static async Task Main()
+        {
             // create client instance
             GbxRemoteClient client = new("127.0.0.1", 5000);
 
             // connect and login
-            if (!await client.LoginAsync("SuperAdmin", "SuperAdmin")) {
+            if (!await client.LoginAsync("SuperAdmin", "SuperAdmin"))
+            {
                 Console.WriteLine("Failed to login.");
                 return;
             }
@@ -32,7 +33,6 @@ namespace CallbackExample {
             client.OnEndChallenge += Client_OnEndChallenge;
             client.OnStatusChanged += Client_OnStatusChanged;
             client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
-
             client.OnConnected += Client_OnConnected;
             client.OnDisconnected += Client_OnDisconnected;
 
@@ -43,23 +43,27 @@ namespace CallbackExample {
             WaitHandle.WaitAny(new[] { cancelToken.Token.WaitHandle });
         }
 
-        private static Task Client_OnDisconnected() {
+        private static Task Client_OnDisconnected()
+        {
             Console.WriteLine("Client disconnected, exiting ...");
             cancelToken.Cancel();
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnConnected() {
+        private static Task Client_OnConnected()
+        {
             Console.WriteLine("Connected!");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerInfoChanged(SPlayerInfo playerInfo) {
+        private static Task Client_OnPlayerInfoChanged(SPlayerInfo playerInfo)
+        {
             Console.WriteLine($"Player info changed for: {playerInfo.NickName}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnStatusChanged(int statusCode, string statusName) {
+        private static Task Client_OnStatusChanged(int statusCode, string statusName)
+        {
             Console.WriteLine($"[Status Changed] {statusCode}: {statusName}");
             return Task.CompletedTask;
         }
@@ -70,50 +74,33 @@ namespace CallbackExample {
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnEndChallenge(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge) {
+        private static Task Client_OnEndChallenge(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge)
+        {
             Console.WriteLine($"End challenge: {challenge.Name}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnEndMatch(SPlayerRanking[] rankings, int winnerTeam) {
-            Console.WriteLine("Match ended, rankings:");
-            foreach (var ranking in rankings)
-                Console.WriteLine($"- {ranking.Login}: {ranking.Rank}");
-
-            return Task.CompletedTask;
-        }
-
-        private static Task Client_OnBeginMatch() {
-            Console.WriteLine("New match begun.");
-            return Task.CompletedTask;
-        }
-
-        private static Task Client_OnEcho(string internalParam, string publicParam) {
+        private static Task Client_OnEcho(string internalParam, string publicParam)
+        {
             Console.WriteLine($"[Echo] internal: {internalParam}, public: {publicParam}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerChat(int playerUid, string login, string text, bool isRegisteredCmd) {
+        private static Task Client_OnPlayerChat(int playerUid, string login, string text, bool isRegisteredCmd)
+        {
             Console.WriteLine($"[Chat] {login}: {text}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerDisconnect(string login) {
+        private static Task Client_OnPlayerDisconnect(string login)
+        {
             Console.WriteLine($"Player disconnected: {login}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerConnect(string login, bool isSpectator) {
+        private static Task Client_OnPlayerConnect(string login, bool isSpectator)
+        {
             Console.WriteLine($"Player connected: {login}");
-            return Task.CompletedTask;
-        }
-
-        private static Task Client_OnAnyCallback(MethodCall call, object[] pars) {
-            Console.WriteLine($"[Any callback] {call.Method}:");
-            foreach (var par in pars) {
-                Console.WriteLine($"- {par}");
-            }
-
             return Task.CompletedTask;
         }
     }

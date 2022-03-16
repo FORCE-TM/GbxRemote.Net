@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GbxRemoteNet.XmlRpc {
+﻿namespace GbxRemoteNet.XmlRpc
+{
     /// <summary>
     /// The defined XML element names as defined by the XML-RPC protocol.
     /// </summary>
-    public class XmlRpcElementNames {
+    public class XmlRpcElementNames
+    {
         public const string MethodCall = "methodCall";
         public const string MethodResponse = "methodResponse";
         public const string MethodName = "methodName";

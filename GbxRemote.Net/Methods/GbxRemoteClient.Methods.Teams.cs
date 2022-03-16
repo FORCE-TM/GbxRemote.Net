@@ -1,12 +1,14 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Teams
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Set a new points limit for team mode (value set depends on UseNewRulesTeam). Only available to Admin. Requires a challenge restart to be taken into account.
         /// </summary>

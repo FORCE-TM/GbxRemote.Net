@@ -1,16 +1,14 @@
-﻿using GbxRemoteNet.XmlRpc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using GbxRemoteNet.XmlRpc;
 using Xunit;
 
-namespace GbxRemote.Net.Tests.XmlRpcTests {
-    public class XmlRpcIOTests {
+namespace GbxRemote.Net.Tests.XmlRpcTests
+{
+    public class XmlRpcIOTests
+    {
         [Fact]
-        public void Reads_One_Byte_Correctly() {
+        public void Reads_One_Byte_Correctly()
+        {
             MemoryStream stream = new(new byte[] { 0xa4 });
             XmlRpcIO io = new(stream);
 
@@ -27,7 +25,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests {
         [InlineData((byte)0x01)]
         [InlineData((byte)0xff)]
         [InlineData((byte)0x1, (byte)0x2, (byte)0x3, (byte)0x4, (byte)0x5, (byte)0x6, (byte)0x7, (byte)0x8, (byte)0x9, (byte)0x10)]
-        public void Correctly_Reads_Byte_Sequence(params byte[] byteSequence) {
+        public void Correctly_Reads_Byte_Sequence(params byte[] byteSequence)
+        {
             MemoryStream stream = new(byteSequence);
             XmlRpcIO io = new(stream);
 

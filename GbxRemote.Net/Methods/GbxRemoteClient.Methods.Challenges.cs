@@ -1,15 +1,15 @@
-﻿using GbxRemoteNet.Structs;
-using GbxRemoteNet.XmlRpc;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using GbxRemoteNet.Structs;
+using GbxRemoteNet.XmlRpc;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Challenges
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Returns the current challenge index in the selection, or -1 if the challenge is no longer in the selection.
         /// </summary>

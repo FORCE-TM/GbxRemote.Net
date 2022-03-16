@@ -1,18 +1,17 @@
-﻿using GbxRemoteNet.XmlRpc.ExtraTypes;
-using GbxRemoteNet.XmlRpc.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Xml.Linq;
+using GbxRemoteNet.XmlRpc.ExtraTypes;
+using GbxRemoteNet.XmlRpc.Types;
 using Xunit;
 
-namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests {
-    public class MultiDataTypesTests {
+namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests
+{
+    public class MultiDataTypesTests
+    {
         #region Arrays
         [Fact]
-        public void XmlRpcArray_Correctly_Parses_XElement_Array_Of_Different_Types() {
+        public void XmlRpcArray_Correctly_Parses_XElement_Array_Of_Different_Types()
+        {
             string arrayXml = @"<value>
     <data>
         <value><i4>1</i4></value>
@@ -51,7 +50,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests {
         }
 
         [Fact]
-        public void XmlRpcArray_Corrected_Parses_2D_Array() {
+        public void XmlRpcArray_Corrected_Parses_2D_Array()
+        {
             string arrayXml = @"<value>
     <data>
         <value>
@@ -115,7 +115,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests {
 
         #region Structs
         [Fact]
-        public void XmlRpcStruct_Parses_Correct_Key_Names() {
+        public void XmlRpcStruct_Parses_Correct_Key_Names()
+        {
             string structxml = @"<struct>
     <member>
         <name>Key1</name>
@@ -139,7 +140,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests {
         }
 
         [Fact]
-        public void XmlRpcStruct_Parses_Various_XML_Struct_Values_Correctly() {
+        public void XmlRpcStruct_Parses_Various_XML_Struct_Values_Correctly()
+        {
             string structxml = @"<struct>
     <member>
         <name>Key1</name>
@@ -212,7 +214,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests.TypesTests {
         }
 
         [Fact]
-        public void XmlRpcStruct_Correctly_Parses_Struct_As_Field() {
+        public void XmlRpcStruct_Correctly_Parses_Struct_As_Field()
+        {
             string structxml = @"<struct>
     <member>
         <name>TestKey</name>

@@ -1,5 +1,7 @@
-﻿namespace GbxRemoteNet.Structs {
-    public class IgnoreListEntry {
+﻿namespace GbxRemoteNet.Structs
+{
+    public class IgnoreListEntry
+    {
         public string Login { get; set; }
     }
 }

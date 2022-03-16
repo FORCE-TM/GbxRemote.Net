@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Xml.Linq;
 
-namespace GbxRemoteNet.XmlRpc {
+namespace GbxRemoteNet.XmlRpc
+{
     /// <summary>
     /// Represents a XML-RPC request.
     /// </summary>
-    public abstract class XmlRpcRequest {
+    public abstract class XmlRpcRequest
+    {
         /// <summary>
         /// The XML document of the request.
         /// </summary>
-        public XDocument MainDocument { get; private set; }
+        public XDocument MainDocument { get; set; }
 
         /// <summary>
         /// Create a new XML-RPC request with a specific name for
         /// the root element.
         /// </summary>
         /// <param name="rootElement">Name of the root element in the XML tree.</param>
-        public XmlRpcRequest(string rootElement) {
+        public XmlRpcRequest(string rootElement)
+        {
             MainDocument = new XDocument(
                 new XDeclaration("1.0", null, null),
                 new XElement(rootElement)
@@ -32,8 +30,9 @@ namespace GbxRemoteNet.XmlRpc {
         /// Generate formatted XML from the request data.
         /// </summary>
         /// <returns></returns>
-        public string GenerateXML() {
-            StringWriter sw = new StringWriter();
+        public string GenerateXML()
+        {
+            var sw = new StringWriter();
             MainDocument.Save(sw);
             return sw.ToString();
         }

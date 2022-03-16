@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace GbxRemoteNet.XmlRpc.Types {
+namespace GbxRemoteNet.XmlRpc.Types
+{
     /// <summary>
     /// Represents an XML-RPC fault.
     /// </summary>
-    public class XmlRpcFault : XmlRpcBaseType, IEquatable<XmlRpcFault> {
+    public class XmlRpcFault : XmlRpcBaseType, IEquatable<XmlRpcFault>
+    {
         public int FaultCode;
         public string FaultString;
 
-        public XmlRpcFault(int faultCode, string faultString) : base(null) {
+        public XmlRpcFault(int faultCode, string faultString) : base(null)
+        {
             FaultCode = faultCode;
             FaultString = faultString;
         }
 
-        public XmlRpcFault(XElement element) : base(element) {
+        public XmlRpcFault(XElement element) : base(element)
+        {
             XmlRpcStruct faultStruct = new(element);
             FaultCode = ((XmlRpcInteger)faultStruct.Fields["faultCode"]).Value;
             FaultString = ((XmlRpcString)faultStruct.Fields["faultString"]).Value;
@@ -28,19 +28,23 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Generate the XML element for this value.
         /// </summary>
         /// <returns>Generated element</returns>
-        public override XElement GetXml() {
+        public override XElement GetXml()
+        {
             throw new NotImplementedException();
         }
 
-        public bool Equals(XmlRpcFault other) {
+        public bool Equals(XmlRpcFault other)
+        {
             return FaultCode.Equals(other.FaultCode) && FaultString.Equals(other.FaultString);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return Equals((XmlRpcFault)obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return GetHashCode();
         }
     }

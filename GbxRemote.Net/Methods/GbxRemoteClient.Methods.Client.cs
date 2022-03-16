@@ -1,12 +1,14 @@
-﻿using GbxRemoteNet.Structs;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Client
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Display a notice on all clients. The parameters are the text message to display, and the login of the avatar to display next to it (or '' for no avatar), and an optional 'max duration' in seconds (default: 3). Only available to Admin.
         /// </summary>

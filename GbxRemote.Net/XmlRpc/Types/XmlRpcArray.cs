@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace GbxRemoteNet.XmlRpc.Types {
+namespace GbxRemoteNet.XmlRpc.Types
+{
     /// <summary>
     /// Represents an XML-RPC array-
     /// </summary>
-    public class XmlRpcArray : XmlRpcBaseType, IEquatable<XmlRpcArray> {
+    public class XmlRpcArray : XmlRpcBaseType, IEquatable<XmlRpcArray>
+    {
         /// <summary>
         /// The values within this array.
         /// </summary>
@@ -19,7 +19,8 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Create a new array instance from a set of XML-RPC values.
         /// </summary>
         /// <param name="values">Values of the array.</param>
-        public XmlRpcArray(XmlRpcBaseType[] values) : base(null) {
+        public XmlRpcArray(XmlRpcBaseType[] values) : base(null)
+        {
             Values = values;
         }
 
@@ -27,13 +28,15 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Parse a XML element and create the array instance from it.
         /// </summary>
         /// <param name="element">Element to parse.</param>
-        public XmlRpcArray(XElement element) : base(element) {
+        public XmlRpcArray(XElement element) : base(element)
+        {
             var arrayValues = element.Elements(XmlRpcElementNames.Data)
-                                            .First()
-                                            .Elements(XmlRpcElementNames.Value);
+                .First()
+                .Elements(XmlRpcElementNames.Value);
             List<XmlRpcBaseType> values = new();
 
-            foreach (XElement valueElement in arrayValues) {
+            foreach (XElement valueElement in arrayValues)
+            {
                 XmlRpcBaseType value = XmlRpcTypes.ElementToInstance(valueElement.Elements().First());
                 values.Add(value);
             }
@@ -46,7 +49,8 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// </summary>
         /// <param name="other">Other array to check.</param>
         /// <returns>True if equal, false if not.</returns>
-        public bool Equals(XmlRpcArray other) {
+        public bool Equals(XmlRpcArray other)
+        {
             return Values.SequenceEqual(other.Values);
         }
 
@@ -55,11 +59,13 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// </summary>
         /// <param name="obj">Other array to check.</param>
         /// <returns>True if equal, false if not.</returns>
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return Equals((XmlRpcArray)obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return GetHashCode();
         }
 
@@ -67,13 +73,14 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Generate the XML element for this value.
         /// </summary>
         /// <returns>Generated element</returns>
-        public override XElement GetXml() {
+        public override XElement GetXml()
+        {
             XElement arrayElement = new(XmlRpcElementNames.Array);
             XElement dataElement = new(XmlRpcElementNames.Data);
             arrayElement.Add(dataElement);
 
             foreach (var value in Values)
-                dataElement.Add(new XElement(XmlRpcElementNames.Value, 
+                dataElement.Add(new XElement(XmlRpcElementNames.Value,
                     value.GetXml()
                 ));
 

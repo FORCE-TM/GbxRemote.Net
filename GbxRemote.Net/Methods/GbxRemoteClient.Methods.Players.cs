@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Players
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         #region Kicking
         /// <summary>
         /// Kick the player with the specified login, with an optional message. Only available to Admin.
@@ -105,9 +107,9 @@ namespace GbxRemoteNet {
         /// Clean the blacklist of the server. Only available to SuperAdmin.
         /// </summary>
         public async Task<bool> CleanBlackListAsync() =>
-           (bool)XmlRpcTypes.ToNativeValue<bool>(
-               await CallOrFaultAsync("CleanBlackList")
-           );
+            (bool)XmlRpcTypes.ToNativeValue<bool>(
+                await CallOrFaultAsync("CleanBlackList")
+            );
 
         /// <summary>
         /// Returns the list of blacklisted players. This method takes two parameters. The first parameter specifies the maximum number of infos to be returned, and the second one the starting index in the list. The list is an array of structures. Each structure contains the following fields : Login.
@@ -198,7 +200,6 @@ namespace GbxRemoteNet {
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SaveGuestList", fileName)
             );
-
         #endregion
 
         #region Ignore List
@@ -283,7 +284,7 @@ namespace GbxRemoteNet {
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo[]> GetPlayerListAsync(int maxInfos=-1, int startIndex=0, int serverType=1) =>
+        public async Task<PlayerInfo[]> GetPlayerListAsync(int maxInfos = -1, int startIndex = 0, int serverType = 1) =>
             (PlayerInfo[])XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetPlayerList", maxInfos, startIndex, serverType)
             );
@@ -294,7 +295,7 @@ namespace GbxRemoteNet {
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo> GetPlayerInfoAsync(string playerLogin, int serverType=1) =>
+        public async Task<PlayerInfo> GetPlayerInfoAsync(string playerLogin, int serverType = 1) =>
             (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetPlayerInfo", playerLogin, serverType)
             );
@@ -313,7 +314,7 @@ namespace GbxRemoteNet {
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo> GetMainServerPlayerInfoAsync(int serverType=1) =>
+        public async Task<PlayerInfo> GetMainServerPlayerInfoAsync(int serverType = 1) =>
             (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetMainServerPlayerInfo", serverType)
             );

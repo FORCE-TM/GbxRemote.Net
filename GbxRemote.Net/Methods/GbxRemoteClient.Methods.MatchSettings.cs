@@ -1,11 +1,13 @@
-﻿using GbxRemoteNet.XmlRpc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet.XmlRpc;
 
-namespace GbxRemoteNet {
+namespace GbxRemoteNet
+{
     /// <summary>
     /// Method Category: Match Settings
     /// </summary>
-    public partial class GbxRemoteClient {
+    public partial class GbxRemoteClient
+    {
         /// <summary>
         /// Set a list of challenges defined in the playlist with the specified filename as the current selection of the server, and load the gameinfos from the same file. Only available to Admin.
         /// </summary>

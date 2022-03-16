@@ -1,5 +1,7 @@
-﻿namespace GbxRemoteNet.Structs {
-    public class SChallengeInfo {
+﻿namespace GbxRemoteNet.Structs
+{
+    public class SChallengeInfo
+    {
         public string Uid { get; set; }
         public string Name { get; set; }
         public string FileName { get; set; }

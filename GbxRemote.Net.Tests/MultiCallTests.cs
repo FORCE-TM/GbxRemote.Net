@@ -1,17 +1,16 @@
-﻿using GbxRemoteNet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using GbxRemoteNet;
 using Xunit;
 
-namespace GbxRemote.Net.Tests {
-    public class MultiCallTests {
+namespace GbxRemote.Net.Tests
+{
+    public class MultiCallTests
+    {
         public Task<bool> TestMethod() => Task.FromResult(true);
 
         [Fact]
-        public void Correctly_Add_Method_From_Native_Method() {
+        public void Correctly_Add_Method_From_Native_Method()
+        {
             MultiCall mc = new();
             mc.Add(TestMethod);
 
@@ -21,7 +20,8 @@ namespace GbxRemote.Net.Tests {
         }
 
         [Fact]
-        public void Correctly_Add_Method_From_NameOf() {
+        public void Correctly_Add_Method_From_NameOf()
+        {
             MultiCall mc = new();
             mc.Add(nameof(TestMethod));
 
@@ -31,7 +31,8 @@ namespace GbxRemote.Net.Tests {
         }
 
         [Fact]
-        public void Correctly_Add_Method_From_String() {
+        public void Correctly_Add_Method_From_String()
+        {
             MultiCall mc = new();
             mc.Add("TestMethod");
 
@@ -41,7 +42,8 @@ namespace GbxRemote.Net.Tests {
         }
 
         [Fact]
-        public void Correctly_Adds_Arguments_For_Method() {
+        public void Correctly_Adds_Arguments_For_Method()
+        {
             MultiCall mc = new();
             mc.Add("TestMethod", 1, "2", 3.14);
 

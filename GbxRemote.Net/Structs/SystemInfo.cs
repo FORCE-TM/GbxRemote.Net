@@ -1,5 +1,7 @@
-﻿namespace GbxRemoteNet.Structs {
-    public class SystemInfo {
+﻿namespace GbxRemoteNet.Structs
+{
+    public class SystemInfo
+    {
         public string PublishedIp { get; set; }
         public int Port { get; set; }
         public int P2PPort { get; set; }

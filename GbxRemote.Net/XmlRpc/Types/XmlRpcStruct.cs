@@ -1,33 +1,35 @@
-﻿using GbxRemoteNet.XmlRpc.ExtraTypes;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using GbxRemoteNet.XmlRpc.ExtraTypes;
 
-namespace GbxRemoteNet.XmlRpc.Types {
+namespace GbxRemoteNet.XmlRpc.Types
+{
     /// <summary>
     /// Represents an XML-RPC struct.
     /// </summary>
-    public class XmlRpcStruct : XmlRpcBaseType, IEquatable<XmlRpcStruct> {
+    public class XmlRpcStruct : XmlRpcBaseType, IEquatable<XmlRpcStruct>
+    {
         public Struct Fields;
 
-        public XmlRpcStruct(Struct fields) : base(null) {
+        public XmlRpcStruct(Struct fields) : base(null)
+        {
             Fields = fields;
         }
 
-        public XmlRpcStruct(XElement element) : base(element) {
+        public XmlRpcStruct(XElement element) : base(element)
+        {
             Fields = new Struct();
             var members = element.Elements(XmlRpcElementNames.Member);
 
-            foreach (XElement member in members) {
+            foreach (XElement member in members)
+            {
                 string name = member.Elements(XmlRpcElementNames.Name).First().Value;
                 XElement valueElement = member.Elements(XmlRpcElementNames.Value)
-                                              .First()
-                                              .Elements()
-                                              .First();
+                    .First()
+                    .Elements()
+                    .First();
 
                 XmlRpcBaseType value = XmlRpcTypes.ElementToInstance(valueElement);
 
@@ -39,12 +41,14 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Create a struct from an object.
         /// </summary>
         /// <param name="obj"></param>
-        public XmlRpcStruct(object obj) : base(null) {
+        public XmlRpcStruct(object obj) : base(null)
+        {
             Type t = obj.GetType();
             var fields = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
             Fields = new Struct();
 
-            foreach (var field in fields) {
+            foreach (var field in fields)
+            {
                 Fields.Add(field.Name, XmlRpcTypes.ToXmlRpcValue(t.GetField(field.Name).GetValue(obj)));
             }
         }
@@ -53,23 +57,28 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Create a struct from a dynamic object.
         /// </summary>
         /// <param name="obj"></param>
-        public XmlRpcStruct(DynamicObject obj) : base(null) {
+        public XmlRpcStruct(DynamicObject obj) : base(null)
+        {
             Fields = new Struct();
 
-            foreach (var kv in obj) {
+            foreach (var kv in obj)
+            {
                 Fields.Add(kv.Key, XmlRpcTypes.ToXmlRpcValue(obj));
             }
         }
 
-        public bool Equals(XmlRpcStruct other) {
+        public bool Equals(XmlRpcStruct other)
+        {
             return Fields.SequenceEqual(other.Fields);
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             return Equals((XmlRpcStruct)obj);
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             return GetHashCode();
         }
 
@@ -77,7 +86,8 @@ namespace GbxRemoteNet.XmlRpc.Types {
         /// Generate the XML element for this value.
         /// </summary>
         /// <returns>Generated element</returns>
-        public override XElement GetXml() {
+        public override XElement GetXml()
+        {
             XElement structElement = new(XmlRpcElementNames.Struct);
 
             foreach (var kv in Fields)

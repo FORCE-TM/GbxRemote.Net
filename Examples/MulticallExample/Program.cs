@@ -1,20 +1,20 @@
 ﻿using GbxRemoteNet;
-using GbxRemoteNet.Structs;
-using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Types;
-using NLog.Config;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MulticallExample {
-    class Program {
-        static async Task Main() {
+namespace MulticallExample
+{
+    internal class Program
+    {
+        private static async Task Main()
+        {
             // create client instance
             GbxRemoteClient client = new("127.0.0.1", 5000);
 
             // connect and login
-            if (!await client.LoginAsync("SuperAdmin", "SuperAdmin")) {
+            if (!await client.LoginAsync("SuperAdmin", "SuperAdmin"))
+            {
                 Console.WriteLine("Failed to login.");
                 return;
             }
@@ -24,18 +24,21 @@ namespace MulticallExample {
             // build the multicall
             MultiCall multicall = new();
             multicall.Add(client.GetChatLinesAsync)
-                     .Add("system.methodHelp", "Authenticate")
-                     .Add(nameof(client.GetVersionAsync))
-                     .Add("NonExistentMethod");
+                .Add("system.methodHelp", "Authenticate")
+                .Add(nameof(client.GetVersionAsync))
+                .Add("NonExistentMethod");
 
             // send all the calls
             object[] results = await client.MultiCallAsync(multicall);
 
-            foreach (var result in results) {
-                if (result is XmlRpcFault) {
-                    var fault = (XmlRpcFault)result;
+            foreach (var result in results)
+            {
+                if (result is XmlRpcFault fault)
+                {
                     Console.WriteLine($"Method call failed: ({fault.FaultCode}) {fault.FaultString}");
-                } else {
+                }
+                else
+                {
                     Console.WriteLine($"Method Result: {result}");
                 }
             }

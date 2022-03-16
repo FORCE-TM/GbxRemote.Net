@@ -1,25 +1,25 @@
-﻿using GbxRemoteNet.Structs;
-using GbxRemoteNet.XmlRpc.ExtraTypes;
-using GbxRemoteNet.XmlRpc.Types;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using GbxRemoteNet.XmlRpc.ExtraTypes;
+using GbxRemoteNet.XmlRpc.Types;
 
-namespace GbxRemoteNet.XmlRpc {
+namespace GbxRemoteNet.XmlRpc
+{
     /// <summary>
     /// Handles conversions between XML elements, XML-RPC type values and native C# values.
     /// </summary>
-    public static class XmlRpcTypes {
+    public static class XmlRpcTypes
+    {
         /// <summary>
         /// Mappings for XML-RPC type names to XML type classes.
         /// </summary>
-        static Dictionary<string, Type> TypesMap = new() {
+        private static readonly Dictionary<string, Type> typesMap = new()
+        {
             // array
             { XmlRpcElementNames.Array.ToLower(), typeof(XmlRpcArray) },
 
@@ -51,12 +51,13 @@ namespace GbxRemoteNet.XmlRpc {
         /// </summary>
         /// <param name="element">The XML element to convert.</param>
         /// <returns>A XML type value.</returns>
-        public static XmlRpcBaseType ElementToInstance(XElement element) {
+        public static XmlRpcBaseType ElementToInstance(XElement element)
+        {
             string elementName = element.Name.ToString();
-            if (!TypesMap.ContainsKey(elementName.ToLower()))
+            if (!typesMap.ContainsKey(elementName.ToLower()))
                 throw new InvalidDataException($"Element '{elementName}' does not exist in the XMLRPC spec!");
 
-            Type xmlRpcType = TypesMap[elementName.ToLower()];
+            Type xmlRpcType = typesMap[elementName.ToLower()];
             XmlRpcBaseType value = (XmlRpcBaseType)Activator.CreateInstance(xmlRpcType, element);
 
             return value;
@@ -70,29 +71,36 @@ namespace GbxRemoteNet.XmlRpc {
         /// <param name="xmlValue">The XML value to convert to a native C# type.</param>
         /// <param name="instanceType">Type to return, if this is null (ignored), the template value is used instead.</param>
         /// <returns>A C# native value.</returns>
-        public static object ToNativeValue<T>(XmlRpcBaseType xmlValue, Type instanceType = null) {
+        public static object ToNativeValue<T>(XmlRpcBaseType xmlValue, Type instanceType = null)
+        {
             if (xmlValue == null)
                 return null;
 
             Type t = xmlValue.GetType();
 
-            if (t == typeof(XmlRpcBase64)) {
+            if (t == typeof(XmlRpcBase64))
                 return ((XmlRpcBase64)xmlValue).Value;
-            } else if (t == typeof(XmlRpcBoolean)) {
+
+            if (t == typeof(XmlRpcBoolean))
                 return ((XmlRpcBoolean)xmlValue).Value;
-            } else if (t == typeof(XmlRpcDateTime)) {
+
+            if (t == typeof(XmlRpcDateTime))
                 return ((XmlRpcDateTime)xmlValue).Value;
-            } else if (t == typeof(XmlRpcDouble)) {
+
+            if (t == typeof(XmlRpcDouble))
                 return ((XmlRpcDouble)xmlValue).Value;
-            } else if (t == typeof(XmlRpcInteger)) {
+
+            if (t == typeof(XmlRpcInteger))
                 return ((XmlRpcInteger)xmlValue).Value;
-            } else if (t == typeof(XmlRpcString)) {
+
+            if (t == typeof(XmlRpcString))
                 return ((XmlRpcString)xmlValue).Value;
-            } else if (t == typeof(XmlRpcArray)) {
+
+            if (t == typeof(XmlRpcArray))
                 return ToNativeArray<T>((XmlRpcArray)xmlValue, instanceType);
-            } else if (t == typeof(XmlRpcStruct)) {
+
+            if (t == typeof(XmlRpcStruct))
                 return ToNativeStruct<T>((XmlRpcStruct)xmlValue, instanceType);
-            }
 
             return null;
         }
@@ -104,18 +112,20 @@ namespace GbxRemoteNet.XmlRpc {
         /// <param name="xmlStruct">The XML type struct to convert.</param>
         /// <param name="instanceType">Type to convert to, template is used instead if null (ignored).</param>
         /// <returns>A DynamicObject or custom type if specified.</returns>
-        public static object ToNativeStruct<T>(XmlRpcStruct xmlStruct, Type instanceType = null) {
+        public static object ToNativeStruct<T>(XmlRpcStruct xmlStruct, Type instanceType = null)
+        {
             // use correct type
             Type t = instanceType;
             if (instanceType == null)
                 t = typeof(T);
 
-            if (t == typeof(DynamicObject) || t == typeof(object)) {
+            if (t == typeof(DynamicObject) || t == typeof(object))
+            {
                 // just copy the value if we have a dynamic object
                 DynamicObject obj = new();
 
-                foreach (var kv in xmlStruct.Fields)
-                    obj.Add(kv.Key, ToNativeValue<object>(kv.Value));
+                foreach (var (key, value) in xmlStruct.Fields)
+                    obj.Add(key, ToNativeValue<object>(value));
 
                 return obj;
             }
@@ -125,19 +135,24 @@ namespace GbxRemoteNet.XmlRpc {
             var fields = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             // copy all the available fields to the instance
-            foreach (var field in fields) {
-                if (xmlStruct.Fields.ContainsKey(field.Name)) {
+            foreach (var field in fields)
+            {
+                if (xmlStruct.Fields.ContainsKey(field.Name))
+                {
                     var fieldType = field.PropertyType.GetElementType() ?? field.PropertyType;
                     object objValue = ToNativeValue<object>(xmlStruct.Fields[field.Name], fieldType);
                     Type objType = objValue.GetType();
 
-                    if (objType.IsArray) {
+                    if (objType.IsArray)
+                    {
                         // array requires special conversion to work
                         int length = (int)objType.GetProperty("Length").GetValue(objValue);
                         Array fieldInstance = Array.CreateInstance(field.PropertyType.GetElementType(), length);
                         Array.Copy((Array)objValue, fieldInstance, length);
                         field.SetValue(nativeStruct, fieldInstance);
-                    } else {
+                    }
+                    else
+                    {
                         field.SetValue(nativeStruct, objValue);
                     }
                 }
@@ -153,7 +168,8 @@ namespace GbxRemoteNet.XmlRpc {
         /// <param name="arr">XML type array to convert.</param>
         /// <param name="instanceType">Type to convert to, template is used if null or ignored.</param>
         /// <returns>A native C# array of type T/instanceType.</returns>
-        public static T[] ToNativeArray<T>(XmlRpcArray arr, Type instanceType = null) {
+        public static T[] ToNativeArray<T>(XmlRpcArray arr, Type instanceType = null)
+        {
             return arr.Values.Select((v, i) => (T)ToNativeValue<T>(v, instanceType)).ToArray();
         }
 
@@ -163,13 +179,15 @@ namespace GbxRemoteNet.XmlRpc {
         /// <typeparam name="T">Type of the 2D array to convert to.</typeparam>
         /// <param name="arr">An XML type array that also has a subarray as it's elements.</param>
         /// <returns>A native C# 2D array of type T.</returns>
-        public static T[][] ToNative2DArray<T>(XmlRpcArray arr) {
+        public static T[][] ToNative2DArray<T>(XmlRpcArray arr)
+        {
             T[][] result = new T[arr.Values.Length][];
-            for (int i = 0; i < arr.Values.Length; i++) {
+            for (int i = 0; i < arr.Values.Length; i++)
+            {
                 XmlRpcArray xmlArr = (XmlRpcArray)arr.Values[i];
                 result[i] = ToNativeArray<T>(xmlArr);
             }
-            
+
             return result;
         }
 
@@ -178,36 +196,56 @@ namespace GbxRemoteNet.XmlRpc {
         /// </summary>
         /// <param name="obj">The value to convert.</param>
         /// <returns>A XML type value.</returns>
-        public static XmlRpcBaseType ToXmlRpcValue(object obj) {
-            if (obj == null) 
+        public static XmlRpcBaseType ToXmlRpcValue(object obj)
+        {
+            if (obj == null)
                 return null;
 
             Type t = obj.GetType();
 
-            if (t == typeof(Base64)) { // base64
+            if (t == typeof(Base64))
+                // base64
                 return new XmlRpcBase64((Base64)obj);
-            } else if (t == typeof(bool)) { // boolean
+
+            if (t == typeof(bool))
+                // boolean
                 return new XmlRpcBoolean((bool)obj);
-            } else if (t == typeof(DateTime)) { // dateTime.iso8601
+
+            if (t == typeof(DateTime))
+                // dateTime.iso8601
                 return new XmlRpcDateTime((DateTime)obj);
-            } else if (t == typeof(double)) { // double
+
+            if (t == typeof(double))
+                // double
                 return new XmlRpcDouble((double)obj);
-            } else if (t == typeof(float)) { // double
+
+            if (t == typeof(float))
+                // double
                 return new XmlRpcDouble((double)obj);
-            } else if (t == typeof(int)) { // int/i4
+
+            if (t == typeof(int))
+                // int/i4
                 return new XmlRpcInteger((int)obj);
-            } else if (t == typeof(uint)) { // int/i4
+
+            if (t == typeof(uint))
+                // int/i4
                 return new XmlRpcInteger((int)obj);
-            } else if (t == typeof(string)) { // string
+
+            if (t == typeof(string))
+                // string
                 return new XmlRpcString((string)obj);
-            } else if (t == typeof(DynamicObject)) { // struct
+
+            if (t == typeof(DynamicObject))
+                // struct
                 return new XmlRpcStruct(obj);
-            } else if (typeof(IEnumerable).IsAssignableFrom(t)) { // array
+
+            if (typeof(IEnumerable).IsAssignableFrom(t))
+                // array
                 return ToXmlRpcArray(obj);
 
-            } else if (t.IsClass) { // struct
+            if (t.IsClass)
+                // struct
                 return new XmlRpcStruct(obj);
-            }
 
             return null;
         }
@@ -217,9 +255,10 @@ namespace GbxRemoteNet.XmlRpc {
         /// </summary>
         /// <param name="obj">This can be any type as long as it's an array.</param>
         /// <returns>A XML type array.</returns>
-        public static XmlRpcArray ToXmlRpcArray(object obj) {
-            IEnumerable arr = obj as IEnumerable;
-            List<XmlRpcBaseType> items = new List<XmlRpcBaseType>();
+        public static XmlRpcArray ToXmlRpcArray(object obj)
+        {
+            var arr = obj as IEnumerable;
+            var items = new List<XmlRpcBaseType>();
 
             foreach (var item in arr)
                 items.Add(ToXmlRpcValue(item));

@@ -1,5 +1,7 @@
-namespace GbxRemoteNet.Structs {
-    public class NetworkStats {
+namespace GbxRemoteNet.Structs
+{
+    public class NetworkStats
+    {
         public int Uptime { get; set; }
         public int NbrConnection { get; set; }
         public int MeanConnectionTime { get; set; }

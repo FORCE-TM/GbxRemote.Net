@@ -1,22 +1,23 @@
-﻿using GbxRemoteNet.XmlRpc;
+﻿using System;
+using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace GbxRemote.Net.Tests.XmlRpcTests {
-    public class XmlRpcCallTests {
-        private class XmlRpcRequestTest : XmlRpcRequest {
-            public XmlRpcRequestTest() : base("TestElement") {
+namespace GbxRemote.Net.Tests.XmlRpcTests
+{
+    public class XmlRpcCallTests
+    {
+        private class XmlRpcRequestTest : XmlRpcRequest
+        {
+            public XmlRpcRequestTest() : base("TestElement")
+            {
             }
         }
 
         [Fact]
-        public void XmlRpcRequest_Correctly_Generates_XML_Output() {
+        public void XmlRpcRequest_Correctly_Generates_XML_Output()
+        {
             XmlRpcRequestTest test = new();
 
             string xml = test.GenerateXML();
@@ -27,7 +28,8 @@ namespace GbxRemote.Net.Tests.XmlRpcTests {
         }
 
         [Fact]
-        public void XmlRpcCall_Generates_Correct_Method_Call_With_Various_Params() {
+        public void XmlRpcCall_Generates_Correct_Method_Call_With_Various_Params()
+        {
             XmlRpcCall call = new("TestMethod",
                 new XmlRpcString("Test String"),
                 new XmlRpcInteger(123),
@@ -35,12 +37,14 @@ namespace GbxRemote.Net.Tests.XmlRpcTests {
                 new XmlRpcBase64(Base64.FromBase64String("VGVzdCBTdHJpbmc=")),
                 new XmlRpcBoolean(true),
                 new XmlRpcDateTime(DateTime.Parse("2021-04-06T16:36:44.1557489+02:00")),
-                new XmlRpcArray(new XmlRpcBaseType[] {
+                new XmlRpcArray(new XmlRpcBaseType[]
+                {
                     new XmlRpcInteger(1),
                     new XmlRpcInteger(2),
                     new XmlRpcInteger(3)
                 }),
-                new XmlRpcStruct(new Struct() {
+                new XmlRpcStruct(new Struct()
+                {
                     { "Key1", new XmlRpcString("Value 1") },
                     { "Key2", new XmlRpcString("Value 2") },
                     { "Key3", new XmlRpcString("Value 3") }

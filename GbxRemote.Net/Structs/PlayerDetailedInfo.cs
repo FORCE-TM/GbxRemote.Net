@@ -1,5 +1,7 @@
-namespace GbxRemoteNet.Structs {
-    public class PlayerDetailedInfo {
+namespace GbxRemoteNet.Structs
+{
+    public class PlayerDetailedInfo
+    {
         public string Login { get; set; }
         public string NickName { get; set; }
         public int PlayerId { get; set; }
