@@ -1,10 +1,9 @@
 namespace GbxRemoteNet.Structs {
-    public class PlayerInfo : MinimalPlayerInfo {
+    public class PlayerInfo {
+        public string Login { get; set; }
         public string NickName { get; set; }
         public int PlayerId { get; set; }
         public int TeamId { get; set; }
-        public int IsSpectator { get; set; }
-        public bool IsInOfficialMode { get; set; }
         public int LadderRanking { get; set; }
         public int SpectatorStatus { get; set; }
         public int Flags { get; set; }
@@ -17,8 +16,6 @@ namespace GbxRemoteNet.Structs {
         public bool IsManagedByAnOtherServer { get; set; }
         public bool IsServer { get; set; }
         public bool HasPlayerSlot { get; set; }
-        public bool IsBroadcasting { get; set; }
-        public bool HasJoinedGame { get; set; }
 
         // SpectatorStatus
         public bool Spectator { get; set; }

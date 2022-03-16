@@ -35,6 +35,8 @@ namespace BasicExample {
                 Console.WriteLine($"Login: {player.Login}, NickName: {player.NickName}");
             }
 
+            await client.GetVersionAsync();
+
             // disconnect and clean up
             await client.DisconnectAsync();
         }

@@ -14,7 +14,5 @@ namespace GbxRemoteNet.Structs {
         public bool LapRace { get; set; }
         public int NbLaps { get; set; }
         public int NbCheckpoints { get; set; }
-        public string MapType { get; set; }
-        public string MapStyle { get; set; }
     }
 }

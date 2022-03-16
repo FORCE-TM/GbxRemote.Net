@@ -8,5 +8,6 @@ namespace GbxRemoteNet.Structs {
         public int SendNetRate { get; set; }
         public int TotalReceivingSize { get; set; }
         public int TotalSendingSize { get; set; }
+        public PlayerNetInfo[] PlayerNetInfos { get; set; }
     }
 }

@@ -1,12 +1,12 @@
 namespace GbxRemoteNet.Structs {
-    public class PlayerDetailedInfo : MinimalPlayerInfo {
+    public class PlayerDetailedInfo {
+        public string Login { get; set; }
         public string NickName { get; set; }
         public int PlayerId { get; set; }
         public int TeamId { get; set; }
         public string Path { get; set; }
         public string Language { get; set; }
         public string ClientVersion { get; set; }
-        public string ClientTitleVersion { get; set; }
         public string IPAddress { get; set; }
         public int DownloadRate { get; set; }
         public int UploadRate { get; set; }
@@ -17,8 +17,6 @@ namespace GbxRemoteNet.Structs {
         public Skin[] Skins { get; set; }
         public LadderStats LadderStats { get; set; }
         public int HoursSinceZoneInscription { get; set; }
-        public string BroadcasterLogin { get; set; }
-        public string[] Allies { get; set; }
-        public string ClubLink { get; set; }
+        public int OnlineRights { get; set; }
     }
 }
