@@ -1,145 +1,189 @@
 ﻿using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
-using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Packets;
 using GbxRemoteNet.XmlRpc.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using GbxRemoteNet.XmlRpc.ExtraTypes;
 
 namespace GbxRemoteNet {
     public partial class GbxRemoteClient {
-        /// <summary>
-        /// Action for the OnAnyCallback event.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="call">Information about the callback.</param>
-        /// <param name="pars">Parameters of the callback.</param>
-        /// <returns></returns>
-        public delegate Task CallbackAction<T>(MethodCall call, T[] pars);
-        /// <summary>
-        /// Action for the OnPlayerConnect event.
-        /// </summary>
-        /// <param name="login">Player's login/user name.</param>
-        /// <param name="isSpectator">Whether the player is in spectator mode.</param>
-        /// <returns></returns>
-        public delegate Task PlayerConnectAction(string login, bool isSpectator);
-        /// <summary>
-        /// Action for the OnPlayerDisconnect event.
-        /// </summary>
-        /// <param name="login">Player's login/user name.</param>
-        /// <param name="reason">The reason the player disconnected.</param>
-        /// <returns></returns>
-        public delegate Task PlayerDisconnectAction(string login, string reason);
-        /// <summary>
-        /// Action for the OnPlayerChat event.
-        /// </summary>
-        /// <param name="playerUid">The ID of the player on the server.</param>
-        /// <param name="login">Login/user name of the player.</param>
-        /// <param name="text">The message the player sent to the chat.</param>
-        /// <param name="isRegisteredCmd">Whether the message is a command.</param>
-        /// <returns></returns>
-        public delegate Task PlayerChatAction(int playerUid, string login, string text, bool isRegisteredCmd);
-        /// <summary>
-        /// Action for the OnEcho event.
-        /// </summary>
-        /// <param name="internalParam">The internal parameter, or simply "parameter 1".</param>
-        /// <param name="publicParam">The public parameter, or simply "parameter 2".</param>
-        /// <returns></returns>
-        public delegate Task EchoAction(string internalParam, string publicParam);
-        /// <summary>
-        /// Action for the OnEndMatch event.
-        /// </summary>
-        /// <param name="rankings">Array containing the ranking results of the match.</param>
-        /// <param name="winnerTeam">The ID of the team that won the match if the Teams gamemode is played.</param>
-        /// <returns></returns>
-        public delegate Task EndMatchAction(SPlayerRanking[] rankings, int winnerTeam);
-        /// <summary>
-        /// Action for the OnBeginMap and OnEndMap events.
-        /// </summary>
-        /// <param name="map">Information about the map that will be/was played.</param>
-        /// <returns></returns>
-        public delegate Task BeginEndMapAction(SMapInfo map);
-        /// <summary>
-        /// Action for the OnStatusChanged event.
-        /// </summary>
-        /// <param name="statusCode">Code/ID of the status.</param>
-        /// <param name="statusName">A friendly string that represents the status.</param>
-        /// <returns></returns>
+        public delegate Task CallbackAction<in T>(MethodCall call, T[] parameters);
+        //public delegate Task ServerStartAction();
+        //public delegate Task ServerStopAction();
         public delegate Task StatusChangedAction(int statusCode, string statusName);
+        public delegate Task EchoAction(string internalParam, string publicParam);
+        public delegate Task PlayerConnectAction(string login, bool isSpectator);
+        public delegate Task PlayerDisconnectAction(string login);
         public delegate Task PlayerInfoChangedAction(SPlayerInfo playerInfo);
+        public delegate Task PlayerChatAction(int playerUid, string login, string text, bool isRegisteredCmd);
+        public delegate Task PlayerCheckpointAction(int playerUid, string login, int timeOrScore, int curLap, int checkpointIndex);
+        public delegate Task PlayerFinishAction(int playerUid, string login, int timeOrScore);
+        public delegate Task PlayerIncoherenceAction(int playerUid, string login);
+        public delegate Task PlayerManialinkPageAnswerAction(int playerUid, string login, int answer);
+        public delegate Task BeginRaceAction(SChallengeInfo challenge);
+        public delegate Task EndRaceAction(SPlayerRanking[] rankings, SChallengeInfo challenge);
+        public delegate Task BeginChallengeAction(SChallengeInfo challenge, bool warmUp, bool matchContinuation);
+        public delegate Task EndChallengeAction(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge);
+        public delegate Task BeginRoundAction();
+        public delegate Task EndRoundAction();
+        public delegate Task ChallengeListModifiedAction(int curChallengeIndex, int nextChallengeIndex, bool isListModified);
+        public delegate Task VoteUpdatedAction(string stateName, string login, string cmdName, string cmdParam);
+        public delegate Task BillUpdatedAction(int billId, int state, string stateName, int transactionId);
+        public delegate Task TunnelDataReceivedAction(int playerUid, string login, Base64 data);
+        public delegate Task ManualFlowControlTransitionAction(string transition);
 
         /// <summary>
         /// Triggered for all possible callbacks.
         /// </summary>
         public event CallbackAction<object> OnAnyCallback;
-        /// <summary>
-        /// When a player connects to the server.
-        /// </summary>
-        public event PlayerConnectAction OnPlayerConnect;
-        /// <summary>
-        /// When a player disconnects from the server.
-        /// </summary>
-        public event PlayerDisconnectAction OnPlayerDisconnect;
-        /// <summary>
-        /// When a player sends a chat message.
-        /// </summary>
-        public event PlayerChatAction OnPlayerChat;
-        /// <summary>
-        /// When a echo message is sent. Can be used for communication with other.
-        /// XMLRPC-clients.
-        /// </summary>
-        public event EchoAction OnEcho;
-        /// <summary>
-        /// When the match itself starts, triggered after begin map.
-        /// </summary>
-        public event TaskAction OnBeginMatch;
-        /// <summary>
-        /// When the match ends, does not give a lot of info in TM2020.
-        /// </summary>
-        public event EndMatchAction OnEndMatch;
-        /// <summary>
-        /// When the map has loaded on the server.
-        /// </summary>
-        public event BeginEndMapAction OnBeginMap;
-        /// <summary>
-        /// When the map unloads from the server.
-        /// </summary>
-        public event BeginEndMapAction OnEndMap;
+
+        //public event ServerStartAction OnServerStart;
+        //public event ServerStopAction OnServerStop;
+
         /// <summary>
         /// When the server status changed.
         /// </summary>
         public event StatusChangedAction OnStatusChanged;
+
         /// <summary>
-        /// When data about a player changed, it is usually called when
-        /// a player joins or leaves. Gives you more detailed info about a player.
+        /// When a echo message is sent. Can be used for communication with other XML-RPC clients.
+        /// </summary>
+        public event EchoAction OnEcho;
+
+        /// <summary>
+        /// When a player connects to the server.
+        /// </summary>
+        public event PlayerConnectAction OnPlayerConnect;
+
+        /// <summary>
+        /// When a player disconnects from the server.
+        /// </summary>
+        public event PlayerDisconnectAction OnPlayerDisconnect;
+
+        /// <summary>
+        /// When data about a player changed, it is usually called when a player joins or leaves. Gives you more detailed info about a player.
         /// </summary>
         public event PlayerInfoChangedAction OnPlayerInfoChanged;
 
         /// <summary>
+        /// When a player sends a chat message.
+        /// </summary>
+        public event PlayerChatAction OnPlayerChat;
+
+        /// <summary>
+        /// When a player collects a checkpoint.
+        /// </summary>
+        public event PlayerCheckpointAction OnPlayerCheckpoint;
+
+        /// <summary>
+        /// When a player crosses the finish line or when a player is starting a new run (give up).
+        /// </summary>
+        public event PlayerFinishAction OnPlayerFinish;
+
+        /// <summary>
+        /// When a player's time turns invalid ("red time").
+        /// </summary>
+        public event PlayerIncoherenceAction OnPlayerIncoherence;
+
+        /// <summary>
+        /// When a player clicks a server-side manialink that has action="[number]".
+        /// </summary>
+        public event PlayerManialinkPageAnswerAction OnPlayerManialinkPageAnswer;
+
+        /// <summary>
+        /// When the server switches from Score to Race.
+        /// </summary>
+        public event BeginRaceAction OnBeginRace;
+
+        /// <summary>
+        /// When the server switches from Race to Score.
+        /// </summary>
+        public event EndRaceAction OnEndRace;
+
+        /// <summary>
+        /// When the challenge loads on the server.
+        /// </summary>
+        public event BeginChallengeAction OnBeginChallenge;
+
+        /// <summary>
+        /// When the challenge unloads from the server.
+        /// </summary>
+        public event EndChallengeAction OnEndChallenge;
+
+        /// <summary>
+        /// When the round begins.
+        /// </summary>
+        public event BeginRoundAction OnBeginRound;
+
+        /// <summary>
+        /// When the round ends.
+        /// </summary>
+        public event EndRoundAction OnEndRound;
+
+        /// <summary>
+        /// FIX ME
+        /// </summary>
+        public event ChallengeListModifiedAction OnChallengeListModified;
+
+        /// <summary>
+        /// FIX ME
+        /// </summary>
+        public event VoteUpdatedAction OnVoteUpdated;
+
+        /// <summary>
+        /// When the server receives a transaction from a player, check the bill state.
+        /// </summary>
+        public event BillUpdatedAction OnBillUpdated;
+
+        /// <summary>
+        /// Can be used with <see cref="TunnelSendDataToLoginAsync"/> to communicate with the game server from the relay or the other way around.
+        /// </summary>
+        public event TunnelDataReceivedAction OnTunnelDataReceived;
+
+        /// <summary>
+        /// FIX ME
+        /// </summary>
+        public event ManualFlowControlTransitionAction OnManualFlowControlTransition;
+
+        /// <summary>
         /// Main callback handler.
         /// </summary>
-        /// <param name="call"></param>
-        /// <returns></returns>
         private async Task GbxRemoteClient_OnCallback(MethodCall call) {
             switch (call.Method) {
-                case "ManiaPlanet.PlayerConnect":
+                //case "TrackMania.ServerStart":
+                //    OnServerStart?.Invoke();
+                //    break;
+                //case "TrackMania.ServerStop":
+                //    OnServerStop?.Invoke();
+                //    break;
+                case "TrackMania.StatusChanged":
+                    OnStatusChanged?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
+                    );
+                    break;
+                case "TrackMania.Echo":
+                    OnEcho?.Invoke(
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
+                    );
+                    break;
                 case "TrackMania.PlayerConnect":
                     OnPlayerConnect?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[1])
                     );
                     break;
-                case "ManiaPlanet.PlayerDisconnect":
                 case "TrackMania.PlayerDisconnect":
                     OnPlayerDisconnect?.Invoke(
-                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
-                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0])
                     );
                     break;
-                case "ManiaPlanet.PlayerChat":
+                case "TrackMania.PlayerInfoChanged":
+                    OnPlayerInfoChanged?.Invoke(
+                        (SPlayerInfo)XmlRpcTypes.ToNativeValue<SPlayerInfo>(call.Arguments[0])
+                    );
+                    break;
                 case "TrackMania.PlayerChat":
                     OnPlayerChat?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -148,47 +192,101 @@ namespace GbxRemoteNet {
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[3])
                     );
                     break;
-                case "ManiaPlanet.Echo":
-                case "TrackMania.Echo":
-                    OnEcho?.Invoke(
-                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
-                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
+                case "TrackMania.PlayerCheckpoint":
+                    OnPlayerCheckpoint?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[2]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[3]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[4])
                     );
                     break;
-                case "ManiaPlanet.BeginMatch":
-                case "TrackMania.BeginMatch":
-                    OnBeginMatch?.Invoke();
-                    break;
-                case "ManiaPlanet.EndMatch":
-                case "TrackMania.EndMatch":
-                    OnEndMatch?.Invoke(
-                        (SPlayerRanking[])XmlRpcTypes.ToNativeValue<SPlayerRanking>(call.Arguments[0]),
-                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[1])
+                case "TrackMania.PlayerFinish":
+                    OnPlayerFinish?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[2])
                     );
                     break;
-                case "ManiaPlanet.BeginMap":
-                case "TrackMania.BeginMap":
-                    OnBeginMap?.Invoke(
-                        (SMapInfo)XmlRpcTypes.ToNativeValue<SMapInfo>(call.Arguments[0])
-                    );
-                    break;
-                case "ManiaPlanet.EndMap":
-                case "TrackMania.EndMap":
-                    OnEndMap?.Invoke(
-                        (SMapInfo)XmlRpcTypes.ToNativeValue<SMapInfo>(call.Arguments[0])
-                    );
-                    break;
-                case "ManiaPlanet.StatusChanged":
-                case "TrackMania.StatusChanged":
-                    OnStatusChanged?.Invoke(
+                case "TrackMania.PlayerIncoherence":
+                    OnPlayerIncoherence?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
                     );
                     break;
-                case "ManiaPlanet.PlayerInfoChanged":
-                case "TrackMania.PlayerInfoChanged":
-                    OnPlayerInfoChanged?.Invoke(
-                        (SPlayerInfo)XmlRpcTypes.ToNativeValue<SPlayerInfo>(call.Arguments[0])
+                case "TrackMania.PlayerManialinkPageAnswer":
+                    OnPlayerManialinkPageAnswer?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[2])
+                    );
+                    break;
+                case "TrackMania.BeginRace":
+                    OnBeginRace?.Invoke(
+                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[0])
+                    );
+                    break;
+                case "TrackMania.EndRace":
+                    OnEndRace?.Invoke(
+                        (SPlayerRanking[])XmlRpcTypes.ToNativeValue<SPlayerRanking[]>(call.Arguments[0]),
+                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[1])
+                    );
+                    break;
+                case "TrackMania.BeginChallenge":
+                    OnBeginChallenge?.Invoke(
+                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[0]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[1]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2])
+                    );
+                    break;
+                case "TrackMania.EndChallenge":
+                    OnEndChallenge?.Invoke(
+                        (SPlayerRanking[])XmlRpcTypes.ToNativeValue<SPlayerRanking[]>(call.Arguments[0]),
+                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[1]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[3]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[4])
+                    );
+                    break;
+                case "TrackMania.BeginRound":
+                    OnBeginRound?.Invoke();
+                    break;
+                case "TrackMania.EndRound":
+                    OnEndRound?.Invoke();
+                    break;
+                case "TrackMania.ChallengeListModified":
+                    OnChallengeListModified?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[1]),
+                        (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2])
+                    );
+                    break;
+                case "TrackMania.VoteUpdated":
+                    OnVoteUpdated?.Invoke(
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[2]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[3])
+                    );
+                    break;
+                case "TrackMania.BillUpdated":
+                    OnBillUpdated?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[1]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[2]),
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[3])
+                    );
+                    break;
+                case "TrackMania.TunnelDataReceived":
+                    OnTunnelDataReceived?.Invoke(
+                        (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1]),
+                        (Base64)XmlRpcTypes.ToNativeValue<Base64>(call.Arguments[2])
+                    );
+                    break;
+                case "TrackMania.ManualFlowControlTransition":
+                    OnManualFlowControlTransition?.Invoke(
+                        (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0])
                     );
                     break;
             }

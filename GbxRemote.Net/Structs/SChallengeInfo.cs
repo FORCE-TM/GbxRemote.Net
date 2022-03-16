@@ -1,5 +1,5 @@
 ﻿namespace GbxRemoteNet.Structs {
-    public class SMapInfo {
+    public class SChallengeInfo {
         public string Uid { get; set; }
         public string Name { get; set; }
         public string FileName { get; set; }
@@ -14,7 +14,5 @@
         public bool LapRace { get; set; }
         public int NbLaps { get; set; }
         public int NbCheckpoints { get; set; }
-        public string MapType { get; set; }
-        public string MapStyle { get; set; }
     }
 }

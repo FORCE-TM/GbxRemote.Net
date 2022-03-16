@@ -5,6 +5,7 @@ using System;
 using System.Dynamic;
 using System.Threading;
 using System.Threading.Tasks;
+using GbxRemoteNet.Structs;
 
 namespace CallbackExample {
     class Program {
@@ -27,10 +28,8 @@ namespace CallbackExample {
             client.OnPlayerDisconnect += Client_OnPlayerDisconnect;
             client.OnPlayerChat += Client_OnPlayerChat;
             client.OnEcho += Client_OnEcho;
-            client.OnBeginMatch += Client_OnBeginMatch;
-            client.OnEndMatch += Client_OnEndMatch;
-            client.OnBeginMap += Client_OnBeginMap;
-            client.OnEndMap += Client_OnEndMap;
+            client.OnBeginChallenge += Client_OnBeginChallenge;
+            client.OnEndChallenge += Client_OnEndChallenge;
             client.OnStatusChanged += Client_OnStatusChanged;
             client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
 
@@ -55,7 +54,7 @@ namespace CallbackExample {
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerInfoChanged(GbxRemoteNet.Structs.SPlayerInfo playerInfo) {
+        private static Task Client_OnPlayerInfoChanged(SPlayerInfo playerInfo) {
             Console.WriteLine($"Player info changed for: {playerInfo.NickName}");
             return Task.CompletedTask;
         }
@@ -65,17 +64,18 @@ namespace CallbackExample {
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnEndMap(GbxRemoteNet.Structs.SMapInfo map) {
-            Console.WriteLine($"End map: {map.Name}");
+        private static Task Client_OnBeginChallenge(SChallengeInfo challenge, bool warmUp, bool matchContinuation)
+        {
+            Console.WriteLine($"Begin challenge: {challenge.Name}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnBeginMap(GbxRemoteNet.Structs.SMapInfo map) {
-            Console.WriteLine($"Begin map: {map.Name}");
+        private static Task Client_OnEndChallenge(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge) {
+            Console.WriteLine($"End challenge: {challenge.Name}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnEndMatch(GbxRemoteNet.Structs.SPlayerRanking[] rankings, int winnerTeam) {
+        private static Task Client_OnEndMatch(SPlayerRanking[] rankings, int winnerTeam) {
             Console.WriteLine("Match ended, rankings:");
             foreach (var ranking in rankings)
                 Console.WriteLine($"- {ranking.Login}: {ranking.Rank}");
@@ -98,7 +98,7 @@ namespace CallbackExample {
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerDisconnect(string login, string reason) {
+        private static Task Client_OnPlayerDisconnect(string login) {
             Console.WriteLine($"Player disconnected: {login}");
             return Task.CompletedTask;
         }
