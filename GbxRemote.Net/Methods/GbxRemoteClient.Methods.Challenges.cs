@@ -31,7 +31,7 @@ namespace GbxRemoteNet
         /// </summary>
         public async Task<bool> SetNextChallengeIndexAsync(int challengeIndex) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("SetNextChallengeIndex")
+                await CallOrFaultAsync("SetNextChallengeIndex", challengeIndex)
             );
 
         /// <summary>

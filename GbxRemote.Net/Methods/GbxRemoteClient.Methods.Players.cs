@@ -324,7 +324,7 @@ namespace GbxRemoteNet
         /// </summary>
         public async Task<PlayerRanking[]> GetCurrentRankingAsync(int maxInfos, int startRatingIndex) =>
             (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking>(
-                await CallOrFaultAsync("GetCurrentRanking")
+                await CallOrFaultAsync("GetCurrentRanking", maxInfos, startRatingIndex)
             );
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace GbxRemoteNet
         /// </summary>
         public async Task<PlayerRanking[]> GetCurrentRankingForLoginAsync(string playerLogin) =>
             (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking>(
-                await CallOrFaultAsync("GetCurrentRankingForLogin")
+                await CallOrFaultAsync("GetCurrentRankingForLogin", playerLogin)
             );
 
         /// <summary>
