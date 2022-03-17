@@ -14,7 +14,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Kick the player with the specified login, with an optional message. Only available to Admin.
         /// </summary>
-        public async Task<bool> KickAsync(string login, string message = null) =>
+        public async Task<bool> KickAsync(string login, string message = "") =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("Kick", login, message)
             );
@@ -22,7 +22,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Kick the player with the specified PlayerId, with an optional message. Only available to Admin.
         /// </summary>
-        public async Task<bool> KickIdAsync(int id, string message = null) =>
+        public async Task<bool> KickIdAsync(int id, string message = "") =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("KickId", id, message)
             );
@@ -32,7 +32,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Ban the player with the specified login, with an optional message. Only available to Admin.
         /// </summary>
-        public async Task<bool> BanAsync(string login, string message = null) =>
+        public async Task<bool> BanAsync(string login, string message = "") =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("Ban", login, message)
             );
@@ -264,7 +264,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Create a bill, send it to a player, and return the BillId. This method takes four parameters: LoginFrom of the payer, Coppers the player has to pay, Label of the transaction and an optional LoginTo of the payee (if empty string, then the server account is used). The creation of the transaction itself may cost coppers, so you need to have coppers on the server account. Only available to Admin.
         /// </summary>
-        public async Task<int> SendBillAsync(string loginFrom, int coppers, string label, string loginTo = null) =>
+        public async Task<int> SendBillAsync(string loginFrom, int coppers, string label, string loginTo = "") =>
             (int)XmlRpcTypes.ToNativeValue<int>(
                 await CallOrFaultAsync("SendBill", loginFrom, coppers, label, loginTo)
             );
