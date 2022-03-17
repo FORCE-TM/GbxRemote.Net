@@ -13,12 +13,19 @@ namespace CallbackExample
         private static async Task Main()
         {
             // create client instance
-            GbxRemoteClient client = new("127.0.0.1", 5000);
+            var client = new GbxRemoteClient("127.0.0.1", 5000);
 
-            // connect and login
-            if (!await client.LoginAsync("SuperAdmin", "SuperAdmin"))
+            // connect
+            if (!await client.ConnectAsync())
             {
                 Console.WriteLine("Failed to login.");
+                return;
+            }
+
+            // authenticate
+            if (!await client.AuthenticateAsync("SuperAdmin", "SuperAdmin"))
+            {
+                Console.WriteLine("Failed to authenticate.");
                 return;
             }
 

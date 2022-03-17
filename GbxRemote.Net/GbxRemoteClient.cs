@@ -55,7 +55,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Call a remote method on the server and return the recieved message.
         /// </summary>
-        public async Task<ResponseMessage> CallMethodAsync(string method, params object[] args)
+        protected async Task<ResponseMessage> CallMethodAsync(string method, params object[] args)
         {
             return await CallAsync(method, MethodArgs(args));
         }
@@ -76,7 +76,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Connect and login to GBXRemote.
         /// </summary>
-        public async Task<bool> LoginAsync(string login, string password)
+        protected async Task<bool> LoginAsync(string login, string password)
         {
             if (!await ConnectAsync(options.ConnectionRetries, options.ConnectionRetryTimeout))
                 return false;
