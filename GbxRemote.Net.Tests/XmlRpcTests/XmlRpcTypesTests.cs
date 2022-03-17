@@ -301,9 +301,9 @@ namespace GbxRemote.Net.Tests.XmlRpcTests
 
         class ToXmlRpcValue_ExampleStruct
         {
-            public int Field1;
-            public int Field2;
-            public int Field3;
+            public int Field1 { get; set; }
+            public int Field2 { get; set; }
+            public int Field3 { get; set; }
         }
 
         public static IEnumerable<object[]> ToXmlRpcValueData => new List<object[]>

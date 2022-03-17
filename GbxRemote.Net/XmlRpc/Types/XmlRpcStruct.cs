@@ -44,12 +44,12 @@ namespace GbxRemoteNet.XmlRpc.Types
         public XmlRpcStruct(object obj) : base(null)
         {
             Type t = obj.GetType();
-            var fields = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var fields = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             Fields = new Struct();
 
             foreach (var field in fields)
             {
-                Fields.Add(field.Name, XmlRpcTypes.ToXmlRpcValue(t.GetField(field.Name).GetValue(obj)));
+                Fields.Add(field.Name, XmlRpcTypes.ToXmlRpcValue(t.GetProperty(field.Name).GetValue(obj)));
             }
         }
 
