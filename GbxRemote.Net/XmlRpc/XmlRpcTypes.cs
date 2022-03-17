@@ -247,6 +247,10 @@ namespace GbxRemoteNet.XmlRpc
                 // struct
                 return new XmlRpcStruct(obj);
 
+            if (t.IsEnum)
+                // int/i4
+                return new XmlRpcInteger((int)obj);
+
             return null;
         }
 

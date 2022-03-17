@@ -2,15 +2,7 @@ namespace GbxRemoteNet.Structs
 {
     public class GameInfo
     {
-        // Duplicate in NewGameInfo
-        public const int GAMEMODE_ROUNDS = 0;
-        public const int GAMEMODE_TIMEATTACK = 1;
-        public const int GAMEMODE_TEAM = 2;
-        public const int GAMEMODE_LAPS = 3;
-        public const int GAMEMODE_STUNTS = 4;
-        public const int GAMEMODE_CUP = 5;
-
-        public int GameMode { get; set; }
+        public GameMode GameMode { get; set; }
         public int NbChallenge { get; set; }
         public int ChatTime { get; set; }
         public int FinishTimeout { get; set; }

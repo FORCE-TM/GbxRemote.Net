@@ -272,8 +272,8 @@ namespace GbxRemoteNet
         /// <summary>
         /// Returns the current state of a bill. This method takes one parameter, the BillId. Returns a struct containing State, StateName and TransactionId. Possible enum values are: CreatingTransaction, Issued, ValidatingPayement, Payed, Refused, Error.
         /// </summary>
-        public async Task<BillState> GetBillStateAsync(int billId) =>
-            (BillState)XmlRpcTypes.ToNativeValue<BillState>(
+        public async Task<Bill> GetBillStateAsync(int billId) =>
+            (Bill)XmlRpcTypes.ToNativeValue<Bill>(
                 await CallOrFaultAsync("GetBillState", billId)
             );
         #endregion
@@ -284,7 +284,7 @@ namespace GbxRemoteNet
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo[]> GetPlayerListAsync(int maxInfos = -1, int startIndex = 0, int serverType = 1) =>
+        public async Task<PlayerInfo[]> GetPlayerListAsync(int maxInfos = -1, int startIndex = 0, ServerType serverType = ServerType.Forever) =>
             (PlayerInfo[])XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetPlayerList", maxInfos, startIndex, serverType)
             );
@@ -295,7 +295,7 @@ namespace GbxRemoteNet
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo> GetPlayerInfoAsync(string playerLogin, int serverType = 1) =>
+        public async Task<PlayerInfo> GetPlayerInfoAsync(string playerLogin, ServerType serverType = ServerType.Forever) =>
             (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetPlayerInfo", playerLogin, serverType)
             );
@@ -314,7 +314,7 @@ namespace GbxRemoteNet
         /// Flags = ForceSpectator(0,1,2) + IsReferee * 10 + IsPodiumReady * 100 + IsUsingStereoscopy * 1000 + IsManagedByAnOtherServer * 10000 + IsServer * 100000 + HasPlayerSlot * 1000000	
         /// SpectatorStatus = Spectator + TemporarySpectator * 10 + PureSpectator * 100 + AutoTarget * 1000 + CurrentTargetId * 10000
         /// </summary>
-        public async Task<PlayerInfo> GetMainServerPlayerInfoAsync(int serverType = 1) =>
+        public async Task<PlayerInfo> GetMainServerPlayerInfoAsync(ServerType serverType = ServerType.Forever) =>
             (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(
                 await CallOrFaultAsync("GetMainServerPlayerInfo", serverType)
             );
@@ -346,23 +346,23 @@ namespace GbxRemoteNet
         /// <summary>
         /// Force the spectating status of the player. You have to pass the login and the spectator mode (0: user selectable, 1: spectator, 2: player). Only available to Admin.
         /// </summary>
-        public async Task<bool> ForceSpectatorAsync(string playerLogin, int cameraType) =>
+        public async Task<bool> ForceSpectatorAsync(string playerLogin, SpectatorMode spectatorMode) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("ForceSpectator", playerLogin, cameraType)
+                await CallOrFaultAsync("ForceSpectator", playerLogin, spectatorMode)
             );
 
         /// <summary>
         /// Force the spectating status of the player. You have to pass the playerid and the spectator mode (0: user selectable, 1: spectator, 2: player). Only available to Admin.
         /// </summary>
-        public async Task<bool> ForceSpectatorIdAsync(int playerId, int cameraType) =>
+        public async Task<bool> ForceSpectatorIdAsync(int playerId, SpectatorMode spectatorMode) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("ForceSpectatorId", playerId, cameraType)
+                await CallOrFaultAsync("ForceSpectatorId", playerId, spectatorMode)
             );
 
         /// <summary>
         /// Force spectators to look at a specific player. You have to pass the login of the spectator (or '' for all) and the login of the target (or '' for automatic), and an integer for the camera type to use (-1 = leave unchanged, 0 = replay, 1 = follow, 2 = free). Only available to Admin.
         /// </summary>
-        public async Task<bool> ForceSpectatorTargetAsync(string playerLogin, string targetLogin, int cameraType) =>
+        public async Task<bool> ForceSpectatorTargetAsync(string playerLogin, string targetLogin, CameraType cameraType) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ForceSpectatorTarget", playerLogin, targetLogin, cameraType)
             );
@@ -370,7 +370,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Force spectators to look at a specific player. You have to pass the id of the spectator (or -1 for all) and the id of the target (or -1 for automatic), and an integer for the camera type to use (-1 = leave unchanged, 0 = replay, 1 = follow, 2 = free). Only available to Admin.
         /// </summary>
-        public async Task<bool> ForceSpectatorTargetIdAsync(int playerId, int targetId, int cameraType) =>
+        public async Task<bool> ForceSpectatorTargetIdAsync(int playerId, int targetId, CameraType cameraType) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("ForceSpectatorTargetId", playerId, targetId, cameraType)
             );

@@ -19,6 +19,6 @@ namespace GbxRemoteNet.Structs
         public Skin[] Skins { get; set; }
         public LadderStats LadderStats { get; set; }
         public int HoursSinceZoneInscription { get; set; }
-        public int OnlineRights { get; set; }
+        public OnlineRights OnlineRights { get; set; }
     }
 }

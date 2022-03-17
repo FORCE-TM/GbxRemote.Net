@@ -2,8 +2,7 @@
 {
     public class Status
     {
-        // TODO: Enum
-        public int Code { get; set; }
+        public ServerStatus Code { get; set; }
         public string Name { get; set; }
     }
 }

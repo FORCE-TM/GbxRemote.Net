@@ -126,16 +126,16 @@ namespace GbxRemoteNet
         /// <summary>
         /// Set whether the server should be hidden from the public server list (0 = visible, 1 = always hidden, 2 = hidden from nations). Only available to Admin.
         /// </summary>
-        public async Task<bool> SetHideServerAsync(int hiddenState) =>
+        public async Task<bool> SetHideServerAsync(ServerVisibility visibility) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
-                await CallOrFaultAsync("SetHideServer", hiddenState)
+                await CallOrFaultAsync("SetHideServer", visibility)
             );
 
         /// <summary>
         /// Get whether the server wants to be hidden from the public server list.
         /// </summary>
-        public async Task<int> GetHideServerAsync() =>
-            (int)XmlRpcTypes.ToNativeValue<int>(
+        public async Task<ServerVisibility> GetHideServerAsync() =>
+            (ServerVisibility)XmlRpcTypes.ToNativeValue<ServerVisibility>(
                 await CallOrFaultAsync("GetHideServer")
             );
 
@@ -286,7 +286,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Set a new ladder mode between ladder disabled (0) and forced (1). Only available to Admin. Requires a challenge restart to be taken into account.
         /// </summary>
-        public async Task<bool> SetLadderModeAsync(int mode) =>
+        public async Task<bool> SetLadderModeAsync(LadderMode mode) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetLadderMode", mode)
             );
@@ -294,8 +294,8 @@ namespace GbxRemoteNet
         /// <summary>
         /// Get the current and next ladder mode on server. The struct returned contains two fields CurrentValue and NextValue.
         /// </summary>
-        public async Task<CurrentNextValue<int>> GetLadderModeAsync() =>
-            (CurrentNextValue<int>)XmlRpcTypes.ToNativeValue<CurrentNextValue<int>>(
+        public async Task<CurrentNextValue<LadderMode>> GetLadderModeAsync() =>
+            (CurrentNextValue<LadderMode>)XmlRpcTypes.ToNativeValue<CurrentNextValue<LadderMode>>(
                 await CallOrFaultAsync("GetLadderMode")
             );
 
@@ -310,7 +310,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Set the network vehicle quality to Fast (0) or High (1). Only available to Admin. Requires a challenge restart to be taken into account.
         /// </summary>
-        public async Task<bool> SetVehicleNetQualityAsync(int quality) =>
+        public async Task<bool> SetVehicleNetQualityAsync(VehicleQuality quality) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetVehicleNetQuality", quality)
             );
@@ -318,8 +318,8 @@ namespace GbxRemoteNet
         /// <summary>
         /// Get the current and next network vehicle quality on server. The struct returned contains two fields CurrentValue and NextValue.
         /// </summary>
-        public async Task<CurrentNextValue<int>> GetVehicleNetQualityAsync() =>
-            (CurrentNextValue<int>)XmlRpcTypes.ToNativeValue<CurrentNextValue<int>>(
+        public async Task<CurrentNextValue<VehicleQuality>> GetVehicleNetQualityAsync() =>
+            (CurrentNextValue<VehicleQuality>)XmlRpcTypes.ToNativeValue<CurrentNextValue<VehicleQuality>>(
                 await CallOrFaultAsync("GetVehicleNetQuality")
             );
 
@@ -334,7 +334,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Optional parameter for compatibility: struct version (0 = united, 1 = forever). Returns a struct containing the server options: Name, Comment, Password, PasswordForSpectator, CurrentMaxPlayers, NextMaxPlayers, CurrentMaxSpectators, NextMaxSpectators, IsP2PUpload, IsP2PDownload, CurrentLadderMode, NextLadderMode, CurrentVehicleNetQuality, NextVehicleNetQuality, CurrentCallVoteTimeOut, NextCallVoteTimeOut, CallVoteRatio, AllowChallengeDownload and AutoSaveReplays, and additionally for forever: RefereePassword, RefereeMode, AutoSaveValidationReplays, HideServer, CurrentUseChangingValidationSeed, NextUseChangingValidationSeed.
         /// </summary>
-        public async Task<ServerOptions> GetServerOptionsAsync(int serverType = 1) =>
+        public async Task<ServerOptions> GetServerOptionsAsync(ServerType serverType = ServerType.Forever) =>
             (ServerOptions)XmlRpcTypes.ToNativeValue<ServerOptions>(
                 await CallOrFaultAsync("GetServerOptions", serverType)
             );
@@ -430,7 +430,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Set the referee validation mode. 0 = validate the top3 players, 1 = validate all players. Only available to Admin.
         /// </summary>
-        public async Task<bool> SetRefereeModeAsync(int mode) =>
+        public async Task<bool> SetRefereeModeAsync(RefereeMode mode) =>
             (bool)XmlRpcTypes.ToNativeValue<bool>(
                 await CallOrFaultAsync("SetRefereeMode", mode)
             );
@@ -438,8 +438,8 @@ namespace GbxRemoteNet
         /// <summary>
         /// Get the referee validation mode.
         /// </summary>
-        public async Task<int> GetRefereeModeAsync() =>
-            (int)XmlRpcTypes.ToNativeValue<int>(
+        public async Task<RefereeMode> GetRefereeModeAsync() =>
+            (RefereeMode)XmlRpcTypes.ToNativeValue<RefereeMode>(
                 await CallOrFaultAsync("GetRefereeMode")
             );
 

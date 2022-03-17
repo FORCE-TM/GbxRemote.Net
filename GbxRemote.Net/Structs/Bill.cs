@@ -1,8 +1,8 @@
 ﻿namespace GbxRemoteNet.Structs
 {
-    public class BillState
+    public class Bill
     {
-        public string State { get; set; }
+        public BillState State { get; set; }
         public string StateName { get; set; }
         public int TransactionId { get; set; }
     }
