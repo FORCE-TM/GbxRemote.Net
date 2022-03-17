@@ -1,6 +1,6 @@
 ﻿namespace GbxRemoteNet.Structs
 {
-    public class SChallengeInfo
+    public class ChallengeInfo
     {
         public string Uid { get; set; }
         public string Name { get; set; }

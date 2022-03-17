@@ -21,7 +21,7 @@ namespace GbxRemoteNet
 
         public delegate Task PlayerDisconnectAction(string login);
 
-        public delegate Task PlayerInfoChangedAction(SPlayerInfo playerInfo);
+        public delegate Task PlayerInfoChangedAction(PlayerInfo playerInfo);
 
         public delegate Task PlayerChatAction(int playerUid, string login, string text, bool isRegisteredCmd);
 
@@ -33,13 +33,13 @@ namespace GbxRemoteNet
 
         public delegate Task PlayerManialinkPageAnswerAction(int playerUid, string login, int answer);
 
-        public delegate Task BeginRaceAction(SChallengeInfo challenge);
+        public delegate Task BeginRaceAction(ChallengeInfo challenge);
 
-        public delegate Task EndRaceAction(SPlayerRanking[] rankings, SChallengeInfo challenge);
+        public delegate Task EndRaceAction(PlayerRanking[] rankings, ChallengeInfo challenge);
 
-        public delegate Task BeginChallengeAction(SChallengeInfo challenge, bool warmUp, bool matchContinuation);
+        public delegate Task BeginChallengeAction(ChallengeInfo challenge, bool warmUp, bool matchContinuation);
 
-        public delegate Task EndChallengeAction(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge);
+        public delegate Task EndChallengeAction(PlayerRanking[] rankings, ChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge);
 
         public delegate Task BeginRoundAction();
 
@@ -206,7 +206,7 @@ namespace GbxRemoteNet
                     break;
                 case "TrackMania.PlayerInfoChanged":
                     OnPlayerInfoChanged?.Invoke(
-                        (SPlayerInfo)XmlRpcTypes.ToNativeValue<SPlayerInfo>(call.Arguments[0])
+                        (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(call.Arguments[0])
                     );
                     break;
                 case "TrackMania.PlayerChat":
@@ -248,26 +248,26 @@ namespace GbxRemoteNet
                     break;
                 case "TrackMania.BeginRace":
                     OnBeginRace?.Invoke(
-                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[0])
+                        (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[0])
                     );
                     break;
                 case "TrackMania.EndRace":
                     OnEndRace?.Invoke(
-                        (SPlayerRanking[])XmlRpcTypes.ToNativeValue<SPlayerRanking[]>(call.Arguments[0]),
-                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[1])
+                        (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking[]>(call.Arguments[0]),
+                        (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[1])
                     );
                     break;
                 case "TrackMania.BeginChallenge":
                     OnBeginChallenge?.Invoke(
-                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[0]),
+                        (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[0]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[1]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2])
                     );
                     break;
                 case "TrackMania.EndChallenge":
                     OnEndChallenge?.Invoke(
-                        (SPlayerRanking[])XmlRpcTypes.ToNativeValue<SPlayerRanking[]>(call.Arguments[0]),
-                        (SChallengeInfo)XmlRpcTypes.ToNativeValue<SChallengeInfo>(call.Arguments[1]),
+                        (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking[]>(call.Arguments[0]),
+                        (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[1]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[3]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[4])

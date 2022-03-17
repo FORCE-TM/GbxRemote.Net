@@ -14,8 +14,8 @@ namespace GbxRemoteNet
         /// <summary>
         /// Returns a struct with the Name, Version and Build of the application remotely controled.
         /// </summary>
-        public async Task<Structs.VersionInfo> GetVersionAsync() =>
-            (Structs.VersionInfo)XmlRpcTypes.ToNativeValue<Structs.VersionInfo>(
+        public async Task<VersionInfo> GetVersionAsync() =>
+            (VersionInfo)XmlRpcTypes.ToNativeValue<VersionInfo>(
                 await CallOrFaultAsync("GetVersion")
             );
 

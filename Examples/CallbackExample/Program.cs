@@ -63,7 +63,7 @@ namespace CallbackExample
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnPlayerInfoChanged(SPlayerInfo playerInfo)
+        private static Task Client_OnPlayerInfoChanged(PlayerInfo playerInfo)
         {
             Console.WriteLine($"Player info changed for: {playerInfo.NickName}");
             return Task.CompletedTask;
@@ -75,13 +75,13 @@ namespace CallbackExample
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnBeginChallenge(SChallengeInfo challenge, bool warmUp, bool matchContinuation)
+        private static Task Client_OnBeginChallenge(ChallengeInfo challenge, bool warmUp, bool matchContinuation)
         {
             Console.WriteLine($"Begin challenge: {challenge.Name}");
             return Task.CompletedTask;
         }
 
-        private static Task Client_OnEndChallenge(SPlayerRanking[] rankings, SChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge)
+        private static Task Client_OnEndChallenge(PlayerRanking[] rankings, ChallengeInfo challenge, bool wasWarmUp, bool matchContinuesOnNextChallenge, bool restartChallenge)
         {
             Console.WriteLine($"End challenge: {challenge.Name}");
             return Task.CompletedTask;
