@@ -76,6 +76,11 @@ namespace GbxRemoteNet.XmlRpc
             if (xmlValue == null)
                 return null;
 
+            if (typeof(IFlag).IsAssignableFrom(instanceType))
+                return Activator.CreateInstance(instanceType,
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+                    null, new object[]{ ((XmlRpcInteger)xmlValue).Value }, null);
+
             Type t = xmlValue.GetType();
 
             if (t == typeof(XmlRpcBase64))
