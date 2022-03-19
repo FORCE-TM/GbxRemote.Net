@@ -30,7 +30,7 @@ namespace GbxRemoteNet.XmlRpc
         /// Generic action for events.
         /// </summary>
         /// <returns></returns>
-        public delegate Task TaskAction();
+        protected delegate Task TaskAction();
 
         /// <summary>
         /// Action for the OnCallback event.
@@ -42,7 +42,7 @@ namespace GbxRemoteNet.XmlRpc
         /// <summary>
         /// Invoked when the client is connected to the XML-RPC server.
         /// </summary>
-        public event TaskAction OnConnected;
+        protected event TaskAction OnConnected;
 
         /// <summary>
         /// Called when a callback occured from the XML-RPC server.
@@ -52,7 +52,7 @@ namespace GbxRemoteNet.XmlRpc
         /// <summary>
         /// Triggered when the client has been disconnected from the server.
         /// </summary>
-        public event TaskAction OnDisconnected;
+        protected event TaskAction OnDisconnected;
 
         protected NadeoXmlRpcClient(string host, int port)
         {
