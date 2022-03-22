@@ -62,18 +62,19 @@ namespace GbxRemoteNet
             return xmlRpcArgs;
         }
 
+        public async Task<bool> ConnectAsync()
+            => await ConnectAsync(options.ConnectionRetries, options.ConnectionRetryTimeout);
+
         /// <summary>
-        /// Connect and login to GBXRemote.
+        /// Connect and authenticate to the server.
         /// </summary>
-        protected async Task<bool> LoginAsync(string login, string password)
+        protected async Task<bool> ConnectAndAuthenticateAsync(string login, string password)
         {
             if (!await ConnectAsync(options.ConnectionRetries, options.ConnectionRetryTimeout))
                 return false;
 
             if (await AuthenticateAsync(login, password))
-            {
                 return true;
-            }
 
             // disconnect if login failed
             await DisconnectAsync();

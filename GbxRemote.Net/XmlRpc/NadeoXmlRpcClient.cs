@@ -97,7 +97,7 @@ namespace GbxRemoteNet.XmlRpc
         /// <param name="retries">Number of times to re-try connection.</param>
         /// <param name="retryTimeout">Number of milliseconds to wait between each re-try.</param>
         /// <returns></returns>
-        public async Task<bool> ConnectAsync(int retries = 0, TimeSpan? retryTimeout = null)
+        public async Task<bool> ConnectAsync(int retries, TimeSpan retryTimeout)
         {
             var connectAddr = await Dns.GetHostAddressesAsync(connectHost);
 
@@ -123,7 +123,7 @@ namespace GbxRemoteNet.XmlRpc
                 if (retries < 0)
                     break;
 
-                await Task.Delay(retryTimeout ?? TimeSpan.FromSeconds(1));
+                await Task.Delay(retryTimeout);
             }
 
             if (retries < 0)
