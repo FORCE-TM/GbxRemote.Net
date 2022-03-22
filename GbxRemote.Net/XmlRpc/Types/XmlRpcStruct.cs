@@ -61,9 +61,9 @@ namespace GbxRemoteNet.XmlRpc.Types
         {
             Fields = new Struct();
 
-            foreach (var kv in obj)
+            foreach (var (key, value) in obj)
             {
-                Fields.Add(kv.Key, XmlRpcTypes.ToXmlRpcValue(obj));
+                Fields.Add(key, XmlRpcTypes.ToXmlRpcValue(value));
             }
         }
 

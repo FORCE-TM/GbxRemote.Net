@@ -242,7 +242,7 @@ namespace GbxRemoteNet.XmlRpc
 
             if (t == typeof(DynamicObject))
                 // struct
-                return new XmlRpcStruct(obj);
+                return new XmlRpcStruct((DynamicObject)obj);
 
             if (typeof(IEnumerable).IsAssignableFrom(t))
                 // array
