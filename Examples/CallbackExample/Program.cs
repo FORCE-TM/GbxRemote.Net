@@ -40,27 +40,12 @@ namespace CallbackExample
             client.OnEndChallenge += Client_OnEndChallenge;
             client.OnStatusChanged += Client_OnStatusChanged;
             client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
-            client.OnConnected += Client_OnConnected;
-            client.OnDisconnected += Client_OnDisconnected;
 
             // enable callbacks
             await client.EnableCallbacksAsync();
 
             // wait indefinitely or until disconnect
             WaitHandle.WaitAny(new[] { cancelToken.Token.WaitHandle });
-        }
-
-        private static Task Client_OnDisconnected()
-        {
-            Console.WriteLine("Client disconnected, exiting ...");
-            cancelToken.Cancel();
-            return Task.CompletedTask;
-        }
-
-        private static Task Client_OnConnected()
-        {
-            Console.WriteLine("Connected!");
-            return Task.CompletedTask;
         }
 
         private static Task Client_OnPlayerInfoChanged(PlayerInfo playerInfo)
