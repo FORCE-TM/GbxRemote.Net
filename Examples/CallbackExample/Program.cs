@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using GbxRemoteNet;
-using GbxRemoteNet.Structs;
 
 namespace CallbackExample
 {

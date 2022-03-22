@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Packets;

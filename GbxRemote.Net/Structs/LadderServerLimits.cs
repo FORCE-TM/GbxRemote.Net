@@ -1,4 +1,4 @@
-﻿namespace GbxRemoteNet.Structs
+﻿namespace GbxRemoteNet
 {
     public class LadderServerLimits
     {

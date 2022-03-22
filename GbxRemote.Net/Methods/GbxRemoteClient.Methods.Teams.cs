@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using GbxRemoteNet.Structs;
 using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
