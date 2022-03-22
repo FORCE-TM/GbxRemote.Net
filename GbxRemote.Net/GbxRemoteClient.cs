@@ -17,13 +17,24 @@ namespace GbxRemoteNet
         /// </summary>
         /// <param name="host">The address to the TrackMania server. Default: 127.0.0.1</param>
         /// <param name="port">The port the XML-RPC server is listening to on your TrackMania server. Default: 5000</param>
-        /// <param name="options">Options for this <see cref="GbxRemoteClient"/>. Leave as <see langword="null"/> for default.</param>
-        public GbxRemoteClient(string host, int port, GbxRemoteClientOptions options = null) : base(host, port)
+        public GbxRemoteClient(string host, int port) : base(host, port)
         {
-            this.options = options ??= new();
+            options = new();
 
-            OnCallback += call => GbxRemoteClient_OnCallback(call,
-                options.CallbackInvoker ?? ((@delegate, args) => Task.FromResult(@delegate?.DynamicInvoke(args))));
+            OnCallback += GbxRemoteClient_OnCallback;
+        }
+
+        /// <summary>
+        /// Create a new instance of the GBXRemote client.
+        /// </summary>
+        /// <param name="host">The address to the TrackMania server. Default: 127.0.0.1</param>
+        /// <param name="port">The port the XML-RPC server is listening to on your TrackMania server. Default: 5000</param>
+        /// <param name="options">Options for this <see cref="GbxRemoteClient"/>.</param>
+        public GbxRemoteClient(string host, int port, GbxRemoteClientOptions options) : base(host, port)
+        {
+            this.options = options;
+
+            OnCallback += GbxRemoteClient_OnCallback;
         }
 
         /// <summary>
