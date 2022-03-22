@@ -178,37 +178,44 @@ namespace GbxRemoteNet
                 //case "TrackMania.ServerStart":
                 //    OnServerStart?.Invoke();
                 //    break;
+
                 //case "TrackMania.ServerStop":
                 //    OnServerStop?.Invoke();
                 //    break;
+
                 case "TrackMania.StatusChanged":
                     OnStatusChanged?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
                     );
                     break;
+
                 case "TrackMania.Echo":
                     OnEcho?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
                     );
                     break;
+
                 case "TrackMania.PlayerConnect":
                     OnPlayerConnect?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[1])
                     );
                     break;
+
                 case "TrackMania.PlayerDisconnect":
                     OnPlayerDisconnect?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0])
                     );
                     break;
+
                 case "TrackMania.PlayerInfoChanged":
                     OnPlayerInfoChanged?.Invoke(
                         (PlayerInfo)XmlRpcTypes.ToNativeValue<PlayerInfo>(call.Arguments[0])
                     );
                     break;
+
                 case "TrackMania.PlayerChat":
                     OnPlayerChat?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -217,6 +224,7 @@ namespace GbxRemoteNet
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[3])
                     );
                     break;
+
                 case "TrackMania.PlayerCheckpoint":
                     OnPlayerCheckpoint?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -226,6 +234,7 @@ namespace GbxRemoteNet
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[4])
                     );
                     break;
+
                 case "TrackMania.PlayerFinish":
                     OnPlayerFinish?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -233,12 +242,14 @@ namespace GbxRemoteNet
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[2])
                     );
                     break;
+
                 case "TrackMania.PlayerIncoherence":
                     OnPlayerIncoherence?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[1])
                     );
                     break;
+
                 case "TrackMania.PlayerManialinkPageAnswer":
                     OnPlayerManialinkPageAnswer?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -246,17 +257,20 @@ namespace GbxRemoteNet
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[2])
                     );
                     break;
+
                 case "TrackMania.BeginRace":
                     OnBeginRace?.Invoke(
                         (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[0])
                     );
                     break;
+
                 case "TrackMania.EndRace":
                     OnEndRace?.Invoke(
                         (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking[]>(call.Arguments[0]),
                         (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[1])
                     );
                     break;
+
                 case "TrackMania.BeginChallenge":
                     OnBeginChallenge?.Invoke(
                         (ChallengeInfo)XmlRpcTypes.ToNativeValue<ChallengeInfo>(call.Arguments[0]),
@@ -264,6 +278,7 @@ namespace GbxRemoteNet
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2])
                     );
                     break;
+
                 case "TrackMania.EndChallenge":
                     OnEndChallenge?.Invoke(
                         (PlayerRanking[])XmlRpcTypes.ToNativeValue<PlayerRanking[]>(call.Arguments[0]),
@@ -273,12 +288,15 @@ namespace GbxRemoteNet
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[4])
                     );
                     break;
+
                 case "TrackMania.BeginRound":
                     OnBeginRound?.Invoke();
                     break;
+
                 case "TrackMania.EndRound":
                     OnEndRound?.Invoke();
                     break;
+
                 case "TrackMania.ChallengeListModified":
                     OnChallengeListModified?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -286,6 +304,7 @@ namespace GbxRemoteNet
                         (bool)XmlRpcTypes.ToNativeValue<bool>(call.Arguments[2])
                     );
                     break;
+
                 case "TrackMania.VoteUpdated":
                     OnVoteUpdated?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0]),
@@ -294,6 +313,7 @@ namespace GbxRemoteNet
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[3])
                     );
                     break;
+
                 case "TrackMania.BillUpdated":
                     OnBillUpdated?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -302,6 +322,7 @@ namespace GbxRemoteNet
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[3])
                     );
                     break;
+
                 case "TrackMania.TunnelDataReceived":
                     OnTunnelDataReceived?.Invoke(
                         (int)XmlRpcTypes.ToNativeValue<int>(call.Arguments[0]),
@@ -309,6 +330,7 @@ namespace GbxRemoteNet
                         (Base64)XmlRpcTypes.ToNativeValue<Base64>(call.Arguments[2])
                     );
                     break;
+
                 case "TrackMania.ManualFlowControlTransition":
                     OnManualFlowControlTransition?.Invoke(
                         (string)XmlRpcTypes.ToNativeValue<string>(call.Arguments[0])
