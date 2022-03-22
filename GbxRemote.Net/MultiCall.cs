@@ -65,70 +65,70 @@ namespace GbxRemoteNet
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1>(Func<T1, Task<R>> method, T1 a1, params object[] args)
-            => AddMethod(method.Method.Name, a1, args);
+        public MultiCall Add<R, T1>(Func<T1, Task<R>> method, T1 a1)
+            => AddMethod(method.Method.Name, a1);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2>(Func<T1, T2, Task<R>> method, T1 a1, T2 a2, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, args);
+        public MultiCall Add<R, T1, T2>(Func<T1, T2, Task<R>> method, T1 a1, T2 a2)
+            => AddMethod(method.Method.Name, a1, a2);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3>(Func<T1, T2, T3, Task<R>> method, T1 a1, T2 a2, T3 a3, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, args);
+        public MultiCall Add<R, T1, T2, T3>(Func<T1, T2, T3, Task<R>> method, T1 a1, T2 a2, T3 a3)
+            => AddMethod(method.Method.Name, a1, a2, a3);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4>(Func<T1, T2, T3, T4, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, args);
+        public MultiCall Add<R, T1, T2, T3, T4>(Func<T1, T2, T3, T4, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8>(Func<T1, T2, T3, T4, T5, T6, T7, T8, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8>(Func<T1, T2, T3, T4, T5, T6, T7, T8, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8, a9, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8, a9);
 
         /// <summary>
         /// Add a call to this multicall using a c# method.
         /// </summary>
         /// <returns>Multicall object so you can chain these methods.</returns>
-        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9, T10 a10, params object[] args)
-            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, args);
+        public MultiCall Add<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, Task<R>> method, T1 a1, T2 a2, T3 a3, T4 a4, T5 a5, T6 a6, T7 a7, T8 a8, T9 a9, T10 a10)
+            => AddMethod(method.Method.Name, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
     }
 }
