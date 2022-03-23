@@ -58,7 +58,7 @@ namespace GbxRemoteNet
         /// <summary>
         /// Triggered for all possible callbacks.
         /// </summary>
-        public event CallbackAction<object> OnAnyCallback;
+        public event CallbackAction<object> OnAnyCallback = delegate { return Task.CompletedTask; };
 
         //public event ServerStartAction OnServerStart;
         //public event ServerStopAction OnServerStop;
@@ -66,107 +66,107 @@ namespace GbxRemoteNet
         /// <summary>
         /// When the server status changed.
         /// </summary>
-        public event StatusChangedAction OnStatusChanged;
+        public event StatusChangedAction OnStatusChanged = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a echo message is sent. Can be used for communication with other XML-RPC clients.
         /// </summary>
-        public event EchoAction OnEcho;
+        public event EchoAction OnEcho = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player connects to the server.
         /// </summary>
-        public event PlayerConnectAction OnPlayerConnect;
+        public event PlayerConnectAction OnPlayerConnect = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player disconnects from the server.
         /// </summary>
-        public event PlayerDisconnectAction OnPlayerDisconnect;
+        public event PlayerDisconnectAction OnPlayerDisconnect = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When data about a player changed, it is usually called when a player joins or leaves. Gives you more detailed info about a player.
         /// </summary>
-        public event PlayerInfoChangedAction OnPlayerInfoChanged;
+        public event PlayerInfoChangedAction OnPlayerInfoChanged = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player sends a chat message.
         /// </summary>
-        public event PlayerChatAction OnPlayerChat;
+        public event PlayerChatAction OnPlayerChat = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player collects a checkpoint.
         /// </summary>
-        public event PlayerCheckpointAction OnPlayerCheckpoint;
+        public event PlayerCheckpointAction OnPlayerCheckpoint = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player crosses the finish line or when a player is starting a new run (give up).
         /// </summary>
-        public event PlayerFinishAction OnPlayerFinish;
+        public event PlayerFinishAction OnPlayerFinish = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player's time turns invalid ("red time").
         /// </summary>
-        public event PlayerIncoherenceAction OnPlayerIncoherence;
+        public event PlayerIncoherenceAction OnPlayerIncoherence = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When a player clicks a server-side manialink that has action="[number]".
         /// </summary>
-        public event PlayerManialinkPageAnswerAction OnPlayerManialinkPageAnswer;
+        public event PlayerManialinkPageAnswerAction OnPlayerManialinkPageAnswer = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the server switches from Score to Race.
         /// </summary>
-        public event BeginRaceAction OnBeginRace;
+        public event BeginRaceAction OnBeginRace = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the server switches from Race to Score.
         /// </summary>
-        public event EndRaceAction OnEndRace;
+        public event EndRaceAction OnEndRace = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the challenge loads on the server.
         /// </summary>
-        public event BeginChallengeAction OnBeginChallenge;
+        public event BeginChallengeAction OnBeginChallenge = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the challenge unloads from the server.
         /// </summary>
-        public event EndChallengeAction OnEndChallenge;
+        public event EndChallengeAction OnEndChallenge = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the round begins.
         /// </summary>
-        public event BeginRoundAction OnBeginRound;
+        public event BeginRoundAction OnBeginRound = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the round ends.
         /// </summary>
-        public event EndRoundAction OnEndRound;
+        public event EndRoundAction OnEndRound = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// FIX ME
         /// </summary>
-        public event ChallengeListModifiedAction OnChallengeListModified;
+        public event ChallengeListModifiedAction OnChallengeListModified = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// FIX ME
         /// </summary>
-        public event VoteUpdatedAction OnVoteUpdated;
+        public event VoteUpdatedAction OnVoteUpdated = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// When the server receives a transaction from a player, check the bill state.
         /// </summary>
-        public event BillUpdatedAction OnBillUpdated;
+        public event BillUpdatedAction OnBillUpdated = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// Can be used with <see cref="TunnelSendDataToLoginAsync"/> to communicate with the game server from the relay or the other way around.
         /// </summary>
-        public event TunnelDataReceivedAction OnTunnelDataReceived;
+        public event TunnelDataReceivedAction OnTunnelDataReceived = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// FIX ME
         /// </summary>
-        public event ManualFlowControlTransitionAction OnManualFlowControlTransition;
+        public event ManualFlowControlTransitionAction OnManualFlowControlTransition = delegate { return Task.CompletedTask; };
 
         /// <summary>
         /// Main callback handler.
