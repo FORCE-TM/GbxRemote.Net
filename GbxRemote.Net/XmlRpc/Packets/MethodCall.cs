@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using GbxRemoteNet.XmlRpc.Types;
 
 namespace GbxRemoteNet.XmlRpc.Packets
@@ -53,9 +54,11 @@ namespace GbxRemoteNet.XmlRpc.Packets
             Call = new(Method, Arguments);
         }
 
-        public async Task<byte[]> Serialize()
+        public async Task<byte[]> Serialize() => await Serialize(SaveOptions.None);
+
+        public async Task<byte[]> Serialize(SaveOptions options = SaveOptions.DisableFormatting)
         {
-            string xml = Call.GenerateXML();
+            string xml = Call.GenerateXML(options);
 
             byte[] lenBytes = BitConverter.GetBytes(xml.Length);
             byte[] handleBytes = BitConverter.GetBytes(Handle);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using GbxRemoteNet.XmlRpc;
 using GbxRemoteNet.XmlRpc.ExtraTypes;
 using GbxRemoteNet.XmlRpc.Types;
@@ -20,7 +21,7 @@ namespace GbxRemote.Net.Tests.XmlRpcTests
         {
             XmlRpcRequestTest test = new();
 
-            string xml = test.GenerateXML();
+            string xml = test.GenerateXML(SaveOptions.None);
             string expected = @"<?xml version=""1.0"" encoding=""utf-16""?>
 <TestElement />";
 
@@ -51,7 +52,7 @@ namespace GbxRemote.Net.Tests.XmlRpcTests
                 })
             );
 
-            string value = call.GenerateXML();
+            string value = call.GenerateXML(SaveOptions.None);
             string expected = @"<?xml version=""1.0"" encoding=""utf-16""?>
 <methodCall>
   <methodName>TestMethod</methodName>

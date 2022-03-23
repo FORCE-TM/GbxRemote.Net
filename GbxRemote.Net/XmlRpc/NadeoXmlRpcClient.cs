@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using GbxRemoteNet.XmlRpc.Packets;
 using GbxRemoteNet.XmlRpc.Types;
 
@@ -197,7 +198,7 @@ namespace GbxRemoteNet.XmlRpc
 
             responseHandles[handle] = new ManualResetEvent(false);
 
-            byte[] data = await call.Serialize();
+            byte[] data = await call.Serialize(SaveOptions.DisableFormatting);
             await xmlRpcIO.WriteBytesAsync(data);
 
             responseHandles[handle].WaitOne();

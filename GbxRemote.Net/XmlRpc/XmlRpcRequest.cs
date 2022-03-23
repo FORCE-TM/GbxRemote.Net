@@ -30,10 +30,10 @@ namespace GbxRemoteNet.XmlRpc
         /// Generate formatted XML from the request data.
         /// </summary>
         /// <returns></returns>
-        public string GenerateXML()
+        public string GenerateXML(SaveOptions options = SaveOptions.DisableFormatting)
         {
             var sw = new StringWriter();
-            MainDocument.Save(sw);
+            MainDocument.Save(sw, options);
             return sw.ToString();
         }
     }
