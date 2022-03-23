@@ -329,8 +329,7 @@ namespace GbxRemoteNet
                     break;
             }
 
-            // always invoke the OnAnyCallback event
-            await invoker(OnAnyCallback, (object[])XmlRpcTypes.ToNativeValue<object>(
+            await invoker(OnAnyCallback, call, (object[])XmlRpcTypes.ToNativeValue<object>(
                 new XmlRpcArray(call.Arguments)
             ));
         }
