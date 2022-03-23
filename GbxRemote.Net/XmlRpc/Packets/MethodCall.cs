@@ -59,10 +59,10 @@ namespace GbxRemoteNet.XmlRpc.Packets
         public async Task<byte[]> Serialize(SaveOptions options = SaveOptions.DisableFormatting)
         {
             string xml = Call.GenerateXML(options);
-
-            byte[] lenBytes = BitConverter.GetBytes(xml.Length);
-            byte[] handleBytes = BitConverter.GetBytes(Handle);
             byte[] xmlBytes = Encoding.UTF8.GetBytes(xml);
+
+            byte[] lenBytes = BitConverter.GetBytes(xmlBytes.Length);
+            byte[] handleBytes = BitConverter.GetBytes(Handle);
             byte[] serialized = new byte[lenBytes.Length + handleBytes.Length + xmlBytes.Length];
 
             Buffer.BlockCopy(lenBytes, 0, serialized, 0, lenBytes.Length);
