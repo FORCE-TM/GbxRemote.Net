@@ -205,5 +205,8 @@ namespace GbxRemoteNet.XmlRpc
             var message = responseMessages[handle];
             return message;
         }
+
+        internal void ClearOnCallbackSubscriptions()
+            => OnCallback = delegate { return Task.CompletedTask; };
     }
 }
