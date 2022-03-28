@@ -4,9 +4,6 @@ using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: Votes
-    /// </summary>
     public partial class GbxRemoteClient
     {
         /// <summary>

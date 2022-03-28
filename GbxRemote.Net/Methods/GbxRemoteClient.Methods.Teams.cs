@@ -3,9 +3,6 @@ using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: Teams
-    /// </summary>
     public partial class GbxRemoteClient
     {
         /// <summary>

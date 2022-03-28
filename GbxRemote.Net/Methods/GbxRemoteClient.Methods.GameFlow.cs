@@ -4,9 +4,6 @@ using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: Game Flow
-    /// </summary>
     public partial class GbxRemoteClient
     {
         /// <summary>

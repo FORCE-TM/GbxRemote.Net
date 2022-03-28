@@ -6,9 +6,6 @@ using GbxRemoteNet.XmlRpc.Types;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: System
-    /// </summary>
     public partial class GbxRemoteClient
     {
         /// <summary>

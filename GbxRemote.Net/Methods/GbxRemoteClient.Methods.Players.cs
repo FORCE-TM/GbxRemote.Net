@@ -4,9 +4,6 @@ using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: Players
-    /// </summary>
     public partial class GbxRemoteClient
     {
         #region Kicking

@@ -3,9 +3,6 @@ using GbxRemoteNet.XmlRpc;
 
 namespace GbxRemoteNet
 {
-    /// <summary>
-    /// Method Category: Match Settings
-    /// </summary>
     public partial class GbxRemoteClient
     {
         /// <summary>
